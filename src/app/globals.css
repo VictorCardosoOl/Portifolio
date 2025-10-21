@@ -1,26 +1,26 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* src/app/globals.css */
+/* ... (conteúdo existente do Tailwind ou create-next-app) ... */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #1a1a1a; /* Cor de fundo escura */
+  color: #ffffff; /* Cor do texto padrão */
+  font-family: var(--font-inter), sans-serif; /* Usa a fonte definida no layout */
+  margin: 0; /* Remove margens padrão */
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main.main-content {
+  padding-top: 80px; /* Adiciona padding no topo para compensar o header fixo (ajuste a altura) */
+  min-height: calc(100vh - 120px); /* Garante altura mínima (viewport - header - footer aprox.) */
+}
+
+a {
+    color: inherit; /* Links herdam a cor por padrão */
+    text-decoration: none; /* Remove sublinhado padrão */
+}
+
+* {
+    box-sizing: border-box; /* Garante que padding/border não aumentem o tamanho */
 }

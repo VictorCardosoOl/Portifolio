@@ -1,0 +1,57 @@
+/* src/components/Header.css */
+.main-header {
+  position: fixed; /* Ou sticky, dependendo do efeito desejado */
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 2rem; /* Ajuste o padding */
+  background-color: rgba(26, 26, 26, 0.8); /* Fundo semi-transparente */
+  backdrop-filter: blur(10px); /* Efeito de desfoque */
+  z-index: 100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+/* Adicione um estado de scroll se quiser mudar o header ao rolar */
+/* .main-header.scrolled { background-color: rgba(26, 26, 26, 0.95); } */
+
+.main-nav {
+  max-width: 1200px; /* Limita a largura do conteúdo da nav */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  color: #e0e0e0; /* Cor mais suave para links */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #ffffff; /* Cor mais clara no hover */
+}
+
+/* Adicione media queries para responsividade do header */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Esconder links em telas menores (menu hambúrguer seria outra etapa) */
+  }
+}

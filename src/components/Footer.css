@@ -1,0 +1,9 @@
+/* src/components/Footer.css */
+.main-footer {
+  padding: 2rem;
+  text-align: center;
+  margin-top: 4rem; /* Espaço acima do rodapé */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #a0a0a0; /* Cor mais suave */
+  font-size: 0.9rem;
+}
