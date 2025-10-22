@@ -40,7 +40,7 @@
 
 /* === Layout da Navegação Interna === */
 .main-nav {
-  max-width: 1200px; /* Limita a largura do conteúdo da navegação */
+  max-width: 100%; /* Limita a largura do conteúdo da navegação */
   margin: 0 auto; /* Centraliza o conteúdo da navegação */
   display: flex;
   justify-content: space-between;

@@ -1,103 +1,173 @@
-import Image from "next/image";
+// src/app/page.tsx
+import React from 'react';
+import Link from 'next/link';
+import { FaGithub, FaLinkedin, FaBriefcase, FaGraduationCap, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa'; // Adicionando FaExternalLinkAlt
+import styles from './page.module.css'; // Importa o CSS Module
+
+// Dados do Portfólio (mantidos aqui por enquanto)
+const portfolioData = {
+  name: "Victor Cunha",
+  title: "Desenvolvedor Full Stack",
+  heroTagline: "Apaixonado por criar experiências digitais intuitivas e performáticas.",
+  aboutMe: [
+    "Olá! Sou Victor, um desenvolvedor com foco em criar soluções web robustas e escaláveis.",
+    "Com experiência em todo o ciclo de desenvolvimento, do front-end com React/Next.js ao back-end com Node.js, busco sempre as melhores práticas e tecnologias para entregar valor."
+  ],
+  academic: [
+    {
+      course: "Análise e Desenvolvimento de Sistemas",
+      institution: "Instituição Fictícia de Ensino",
+      period: "2020 - 2023",
+      description: "Foco em desenvolvimento de software, banco de dados e engenharia de requisitos."
+    },
+  ],
+  projects: [
+    {
+      title: "Plataforma de E-commerce",
+      description: "Loja virtual completa com carrinho, checkout e painel administrativo.",
+      tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "CSS Modules"],
+      liveUrl: "#",
+      repoUrl: "#"
+    },
+    {
+      title: "Sistema de Gerenciamento",
+      description: "Aplicação para gestão interna de tarefas e projetos.",
+      tags: ["React", "Firebase", "CSS Modules"],
+      liveUrl: "#",
+      repoUrl: "#"
+    },
+     {
+      title: "Landing Page Interativa",
+      description: "Página de produto com animações e design moderno.",
+      tags: ["HTML", "CSS", "JavaScript", "GSAP"],
+      liveUrl: "#",
+      repoUrl: "#"
+    }
+  ],
+  skills: ["React", "Next.js", "TypeScript", "JavaScript", "Node.js", "Express", "PostgreSQL", "MongoDB", "Docker", "Git", "CSS Modules", "HTML5", "CSS3"],
+  contactEmail: "victor@email.com",
+};
+
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      {/* ========== Hero Section ========== */}
+      <section id="inicio" className={styles.heroSection}>
+        <div className={styles.container}> {/* Container geral */}
+          <h1 className={styles.heroTitle}>{portfolioData.name}</h1>
+          <p className={styles.heroSubtitle}>{portfolioData.title}</p>
+          <p className={styles.heroTagline}>{portfolioData.heroTagline}</p>
+          <div className={styles.heroActions}>
+             <Link href="/#projetos" className={`${styles.btn} ${styles.btnPrimary}`}>
+                Meus Projetos
+             </Link>
+             <Link href="/#contato" className={`${styles.btn} ${styles.btnSecondary}`}>
+                Entre em Contato
+             </Link>
+          </div>
+        </div>
+         <div className={styles.scrollIndicator}>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+         </div>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+      {/* ========== About Section ========== */}
+      <section id="sobre" className={styles.aboutSection}>
+        <div className={`${styles.container} ${styles.aboutContainer}`}> {/* Container com classe específica */}
+          <h2 className={styles.sectionTitle}>Sobre Mim</h2>
+          <div className={styles.aboutContent}>
+            {portfolioData.aboutMe.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== Academic Section ========== */}
+      <section id="academico" className={styles.academicSection}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Formação Acadêmica</h2>
+          <div className={styles.academicList}>
+            {portfolioData.academic.map((item, index) => (
+              <div key={index} className={styles.academicItem}>
+                <h3 className={styles.academicCourse}>{item.course}</h3>
+                <p className={styles.academicInstitution}>{item.institution} • {item.period}</p>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== Skills Section ========== */}
+      <section id="habilidades" className={styles.skillsSection}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Habilidades</h2>
+          <div className={styles.skillsGrid}>
+            {portfolioData.skills.map((skill) => (
+              <span key={skill} className={styles.skillTag}>
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== Projects Section ========== */}
+      <section id="projetos" className={styles.projectsSection}>
+        <div className={`${styles.container} ${styles.projectsContainer}`}> {/* Container mais largo */}
+          <h2 className={styles.sectionTitle}>Projetos</h2>
+          <div className={styles.projectsGrid}>
+            {portfolioData.projects.map((project, index) => (
+              <div key={index} className={styles.projectCard}>
+                <div className={styles.projectCardContent}>
+                  <h3 className={styles.projectTitle}>{project.title}</h3>
+                  <p className={styles.projectDescription}>{project.description}</p>
+                  <div className={styles.projectTags}>
+                    {project.tags.map(tag => (
+                      <span key={tag} className={styles.projectTag}>{tag}</span>
+                    ))}
+                  </div>
+                  <div className={styles.projectLinks}>
+                    {project.liveUrl && project.liveUrl !== "#" && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
+                        <FaExternalLinkAlt aria-hidden="true" /> Ver Demo
+                      </a>
+                    )}
+                     {project.repoUrl && project.repoUrl !== "#" && (
+                      <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className={styles.projectLink}>
+                        <FaGithub aria-hidden="true" /> Código
+                      </a>
+                     )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== Contact Section ========== */}
+      <section id="contato" className={styles.contactSection}>
+        <div className={styles.container}>
+          <h2 className={styles.sectionTitle}>Entre em Contato</h2>
+          <p className={styles.contactText}>
+            Gostou do que viu? Vamos conversar sobre como posso ajudar no seu próximo projeto!
+          </p>
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`mailto:${portfolioData.contactEmail}`}
+            className={`${styles.btn} ${styles.btnPrimary} ${styles.contactButton}`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
+            <FaEnvelope aria-hidden="true" /> Enviar Email
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* Espaço extra no final */}
+      {/* <div className={styles.bottomSpacer}></div> */}
+    </>
   );
 }
