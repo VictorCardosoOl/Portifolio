@@ -12,7 +12,7 @@ body {
 }
 
 main.main-content {
-  padding-top: 80px; /* Adiciona padding no topo para compensar o header fixo (ajuste a altura) */
+  
   min-height: calc(100vh - 120px); /* Garante altura mínima (viewport - header - footer aprox.) */
 }
 
