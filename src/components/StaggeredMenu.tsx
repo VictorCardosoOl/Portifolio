@@ -1,12 +1,14 @@
 // src/components/StaggeredMenu.tsx
-"use client"; // ESSENCIAL: Adiciona isto no topo para funcionar no Next.js App Router
+"use client";
 
-import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+// 1. Importa useState, useEffect, motion e AnimatePresence
+import React, { useCallback, useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
+import { motion, AnimatePresence } from 'framer-motion'; // Adiciona motion e AnimatePresence
 import './StaggeredMenu.css';
-import Link from 'next/link'; // Importa o Link do Next.js
+import Link from 'next/link';
 
-// Interface para os itens do menu (boa prática com TypeScript)
+// ... (Interfaces MenuItem, SocialItem, StaggeredMenuProps - permanecem iguais) ...
 interface MenuItem {
   label: string;
   ariaLabel: string;
@@ -18,7 +20,6 @@ interface SocialItem {
   link: string;
 }
 
-// Props do componente
 interface StaggeredMenuProps {
   position?: 'left' | 'right';
   colors?: string[];
@@ -34,9 +35,9 @@ interface StaggeredMenuProps {
   isFixed?: boolean;
   onMenuOpen?: () => void;
   onMenuClose?: () => void;
-  // Removemos logoUrl e adicionamos a opção de usar texto
-  logoText?: string; 
+  logoText?: string;
 }
+
 
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   position = 'right',
@@ -46,7 +47,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoText = 'Logo', // Valor padrão para o texto do logo
+  logoText = 'Logo',
   menuButtonColor = '#fff',
   openMenuButtonColor = '#fff',
   accentColor = '#5227FF',
@@ -76,6 +77,33 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const busyRef = useRef(false);
   const itemEntranceTweenRef = useRef<gsap.core.Timeline | null>(null);
 
+  // 2. Estado para controlar a minimização do logo
+  const [isLogoMinimized, setIsLogoMinimized] = useState(false);
+
+  // 3. useEffect para escutar o evento de scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      // Define um ponto de scroll (ex: 100 pixels) para minimizar o logo
+      const scrollThreshold = 100; 
+      if (window.scrollY > scrollThreshold) {
+        setIsLogoMinimized(true);
+      } else {
+        setIsLogoMinimized(false);
+      }
+    };
+
+    // Adiciona o listener quando o componente monta
+    window.addEventListener('scroll', handleScroll);
+
+    // Remove o listener quando o componente desmonta (boa prática)
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); // Array vazio significa que este efeito corre apenas uma vez (montagem/desmontagem)
+
+
+  // ... (useLayoutEffect, buildOpenTimeline, playOpen, playClose, animateIcon, animateColor, animateText, toggleMenu, handleLinkClick - permanecem iguais) ...
+  
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const panel = panelRef.current;
@@ -349,12 +377,15 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     animateText(target);
   }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
   
-  // Função para fechar o menu ao clicar num link (para páginas âncora)
   const handleLinkClick = () => {
     if (openRef.current) {
       toggleMenu();
     }
   };
+
+  // 4. Extrai a primeira letra e o resto do nome
+  const firstLetter = logoText?.charAt(0) || '';
+  const restOfName = logoText?.substring(1) || '';
 
   return (
     <div
@@ -376,14 +407,30 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
         
-        {/* ========== MODIFICAÇÃO DO LOGO ========== */}
-        {/* Trocamos o <img> por um Link de texto */}
+        {/* ========== MODIFICAÇÃO DO LOGO COM ANIMAÇÃO ========== */}
         <div className="sm-logo" aria-label="Logo">
           <Link href="/" className="sm-logo-link">
-            {logoText}
+            {/* Animação para a primeira letra (sempre visível) */}
+            <motion.span layout="position">{firstLetter}</motion.span>
+            
+            {/* AnimatePresence para animar a entrada/saída do resto do nome */}
+            <AnimatePresence initial={false}> 
+              {!isLogoMinimized && (
+                <motion.span
+                  className="sm-logo-rest" // Classe para estilização
+                  initial={{ opacity: 0, width: 0 }} // Começa invisível e sem largura
+                  animate={{ opacity: 1, width: 'auto' }} // Anima para visível e largura automática
+                  exit={{ opacity: 0, width: 0 }} // Anima para invisível e sem largura ao sair
+                  transition={{ duration: 0.3, ease: 'easeInOut' }} // Transição suave
+                  style={{ display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden' }} // Estilos inline para ajudar na animação
+                >
+                  {restOfName}
+                </motion.span>
+              )}
+            </AnimatePresence>
           </Link>
         </div>
-        {/* ========================================= */}
+        {/* ======================================================= */}
 
         <button
           ref={toggleBtnRef}
@@ -410,19 +457,19 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </button>
       </header>
 
+      {/* ... (Restante do <aside id="staggered-menu-panel"> permanece igual) ... */}
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
         <div className="sm-panel-inner">
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  {/* Usamos o Link do Next.js aqui */}
                   <Link 
                     className="sm-panel-item" 
                     href={it.link} 
                     aria-label={it.ariaLabel} 
                     data-index={idx + 1}
-                    onClick={handleLinkClick} // Adiciona o clique para fechar
+                    onClick={handleLinkClick}
                   >
                     <span className="sm-panel-itemLabel">{it.label}</span>
                   </Link>

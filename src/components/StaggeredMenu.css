@@ -372,3 +372,14 @@
     right: 0;
   }
 }
+
+/* ... (todo o CSS anterior) ... */
+
+/* Estilo para a parte do nome que anima (restOfName) */
+.sm-logo-rest {
+  display: inline-block; /* Necessário para animar a largura */
+  vertical-align: bottom; /* Alinha com a primeira letra */
+  white-space: nowrap; /* Evita quebra de linha durante a animação */
+  overflow: hidden; /* Esconde o texto enquanto a largura anima */
+  margin-left: 1px; /* Pequeno espaço entre V e o resto */
+}
