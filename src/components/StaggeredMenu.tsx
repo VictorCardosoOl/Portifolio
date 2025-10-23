@@ -1,10 +1,9 @@
 // src/components/StaggeredMenu.tsx
 "use client";
 
-// 1. Importa useState, useEffect, motion e AnimatePresence
 import React, { useCallback, useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { motion, AnimatePresence } from 'framer-motion'; // Adiciona motion e AnimatePresence
+import { motion, AnimatePresence } from 'framer-motion';
 import './StaggeredMenu.css';
 import Link from 'next/link';
 
@@ -73,37 +72,29 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const spinTweenRef = useRef<gsap.core.Tween | null>(null);
   const textCycleAnimRef = useRef<gsap.core.Tween | null>(null);
   const colorTweenRef = useRef<gsap.core.Tween | null>(null);
-  const toggleBtnRef = useRef<HTMLButtonElement>(null);
+  const toggleBtnRef = useRef<HTMLButtonElement>(null); // Ref para o botão
   const busyRef = useRef(false);
   const itemEntranceTweenRef = useRef<gsap.core.Timeline | null>(null);
 
-  // 2. Estado para controlar a minimização do logo
   const [isLogoMinimized, setIsLogoMinimized] = useState(false);
 
-  // 3. useEffect para escutar o evento de scroll
+  // useEffect para scroll do logo (mantém o que já tínhamos)
   useEffect(() => {
     const handleScroll = () => {
-      // Define um ponto de scroll (ex: 100 pixels) para minimizar o logo
-      const scrollThreshold = 100; 
+      const scrollThreshold = 100;
       if (window.scrollY > scrollThreshold) {
         setIsLogoMinimized(true);
       } else {
         setIsLogoMinimized(false);
       }
     };
-
-    // Adiciona o listener quando o componente monta
     window.addEventListener('scroll', handleScroll);
-
-    // Remove o listener quando o componente desmonta (boa prática)
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []); // Array vazio significa que este efeito corre apenas uma vez (montagem/desmontagem)
+  }, []);
 
-
-  // ... (useLayoutEffect, buildOpenTimeline, playOpen, playClose, animateIcon, animateColor, animateText, toggleMenu, handleLinkClick - permanecem iguais) ...
-  
+  // ... (useLayoutEffect, buildOpenTimeline, playOpen, playClose, animateIcon, animateColor, animateText - permanecem iguais) ...
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const panel = panelRef.current;
@@ -361,38 +352,88 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     });
   }, []);
 
-  const toggleMenu = useCallback(() => {
-    const target = !openRef.current;
-    openRef.current = target;
-    setOpen(target);
-    if (target) {
-      onMenuOpen?.();
-      playOpen();
-    } else {
+  // Modificamos toggleMenu para ser mais simples e reutilizável
+  const closeMenu = useCallback(() => {
+      if (!openRef.current || busyRef.current) return; // Só fecha se estiver aberto e não ocupado
+      openRef.current = false;
+      setOpen(false);
       onMenuClose?.();
       playClose();
-    }
-    animateIcon(target);
-    animateColor(target);
-    animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText, onMenuOpen, onMenuClose]);
+      animateIcon(false);
+      animateColor(false);
+      animateText(false);
+  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
   
+  const openMenu = useCallback(() => {
+      if (openRef.current || busyRef.current) return; // Só abre se estiver fechado e não ocupado
+      openRef.current = true;
+      setOpen(true);
+      onMenuOpen?.();
+      playOpen();
+      animateIcon(true);
+      animateColor(true);
+      animateText(true);
+  }, [playOpen, animateIcon, animateColor, animateText, onMenuOpen]);
+
+  // Função chamada pelo botão de toggle
+  const handleToggleClick = useCallback(() => {
+      if (openRef.current) {
+          closeMenu();
+      } else {
+          openMenu();
+      }
+  }, [closeMenu, openMenu]);
+
+
+  // useEffect para cliques externos e tecla ESC
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Verifica se o menu está aberto, se o clique foi fora do painel E fora do botão de toggle
+      if (
+        openRef.current &&
+        panelRef.current &&
+        !panelRef.current.contains(event.target as Node) &&
+        toggleBtnRef.current &&
+        !toggleBtnRef.current.contains(event.target as Node)
+      ) {
+        closeMenu();
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // Verifica se o menu está aberto e a tecla pressionada é Escape
+      if (openRef.current && event.key === 'Escape') {
+        closeMenu();
+      }
+    };
+
+    // Adiciona os listeners
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    // Remove os listeners na limpeza
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closeMenu]); // Adiciona closeMenu como dependência
+
+
   const handleLinkClick = () => {
-    if (openRef.current) {
-      toggleMenu();
-    }
+    // Reutiliza a função closeMenu que já criámos
+    closeMenu();
   };
 
-  // 4. Extrai a primeira letra e o resto do nome
   const firstLetter = logoText?.charAt(0) || '';
   const restOfName = logoText?.substring(1) || '';
 
   return (
     <div
-      className={(className ? className + ' ' : '') + 'staggered-menu-wrapper' + (isFixed ? ' fixed-wrapper' : '')}
+      // Adiciona a classe 'menu-open' quando o menu está aberto
+      className={`${className || ''} staggered-menu-wrapper ${isFixed ? 'fixed-wrapper' : ''} ${open ? 'menu-open' : ''}`}
       style={accentColor ? { ['--sm-accent']: accentColor } : undefined}
       data-position={position}
-      data-open={open || undefined}
+      // Remove data-open daqui, usamos a classe CSS
     >
       <div ref={preLayersRef} className="sm-prelayers" aria-hidden="true">
         {(() => {
@@ -406,23 +447,19 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        
-        {/* ========== MODIFICAÇÃO DO LOGO COM ANIMAÇÃO ========== */}
+
         <div className="sm-logo" aria-label="Logo">
           <Link href="/" className="sm-logo-link">
-            {/* Animação para a primeira letra (sempre visível) */}
             <motion.span layout="position">{firstLetter}</motion.span>
-            
-            {/* AnimatePresence para animar a entrada/saída do resto do nome */}
-            <AnimatePresence initial={false}> 
+            <AnimatePresence initial={false}>
               {!isLogoMinimized && (
                 <motion.span
-                  className="sm-logo-rest" // Classe para estilização
-                  initial={{ opacity: 0, width: 0 }} // Começa invisível e sem largura
-                  animate={{ opacity: 1, width: 'auto' }} // Anima para visível e largura automática
-                  exit={{ opacity: 0, width: 0 }} // Anima para invisível e sem largura ao sair
-                  transition={{ duration: 0.3, ease: 'easeInOut' }} // Transição suave
-                  style={{ display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden' }} // Estilos inline para ajudar na animação
+                  className="sm-logo-rest"
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 'auto' }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  style={{ display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden' }}
                 >
                   {restOfName}
                 </motion.span>
@@ -430,15 +467,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             </AnimatePresence>
           </Link>
         </div>
-        {/* ======================================================= */}
 
         <button
-          ref={toggleBtnRef}
+          ref={toggleBtnRef} // Certifica que a ref está aqui
           className="sm-toggle"
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="staggered-menu-panel"
-          onClick={toggleMenu}
+          onClick={handleToggleClick} // Usa a nova função
           type="button"
         >
           <span ref={textWrapRef} className="sm-toggle-textWrap" aria-hidden="true">
@@ -457,19 +493,19 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         </button>
       </header>
 
-      {/* ... (Restante do <aside id="staggered-menu-panel"> permanece igual) ... */}
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
-        <div className="sm-panel-inner">
+        {/* ... (Conteúdo do aside permanece igual) ... */}
+         <div className="sm-panel-inner">
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <Link 
-                    className="sm-panel-item" 
-                    href={it.link} 
-                    aria-label={it.ariaLabel} 
+                  <Link
+                    className="sm-panel-item"
+                    href={it.link}
+                    aria-label={it.ariaLabel}
                     data-index={idx + 1}
-                    onClick={handleLinkClick}
+                    onClick={handleLinkClick} // Adiciona o clique para fechar
                   >
                     <span className="sm-panel-itemLabel">{it.label}</span>
                   </Link>

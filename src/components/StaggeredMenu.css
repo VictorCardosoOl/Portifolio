@@ -383,3 +383,37 @@
   overflow: hidden; /* Esconde o texto enquanto a largura anima */
   margin-left: 1px; /* Pequeno espaço entre V e o resto */
 }
+
+/* ... (todo o CSS anterior) ... */
+
+.staggered-menu-wrapper.fixed-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 40;
+  /* Por padrão, o wrapper não intercepta cliques */
+  pointer-events: none; 
+}
+
+/* Quando o menu está aberto, o wrapper e seus filhos diretos podem receber eventos */
+.staggered-menu-wrapper.menu-open,
+.staggered-menu-wrapper.menu-open > * {
+   pointer-events: auto;
+}
+
+/* Garante que o header (logo/botão) seja sempre clicável, mesmo com o wrapper em none */
+.staggered-menu-header {
+  /* ... outros estilos ... */
+  pointer-events: auto; /* Garante que o header sempre receba eventos */
+}
+.staggered-menu-header > * {
+  pointer-events: auto; /* E seus filhos também */
+}
+
+/* O painel do menu (quando visível) também deve receber eventos */
+.staggered-menu-panel {
+   /* ... outros estilos ... */
+   pointer-events: auto;
+}
