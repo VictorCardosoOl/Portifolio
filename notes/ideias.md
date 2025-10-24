@@ -6,3 +6,4 @@ https://reactbits.dev/text-animations/text-pressure
 
 https://reactbits.dev/text-animations/fuzzy-text pagina de erro
 
+https://reactbits.dev/text-animations/decrypted-text
