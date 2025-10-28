@@ -17,3 +17,13 @@ https://ui.aceternity.com/components/sticky-scroll-reveal esse efeito ficaria le
 https://ui.aceternity.com/components/apple-cards-carousel sensacional 
 
 https://ui.aceternity.com/components/github-globe
+
+------------------------------------------
+
+Ref
+
+https://fableco.uk/
+https://www.poison.studio/
+https://oversour.studio/
+https://www.oroya.fr/
+https://cristianaaraujo.com/
