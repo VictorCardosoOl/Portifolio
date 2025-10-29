@@ -67,11 +67,11 @@ export default function RootLayout({
           {children}
           {/* O Footer pode ficar aqui DENTRO se você quiser que ele faça parte do scroll suave */}
           {/* Ou FORA se ele deve ficar sempre visível ou ter comportamento diferente */}
-          {/* <Footer />  */}
+          <Footer />  
         </main>
 
         {/* 3. Coloquei o Footer FORA do main por simplicidade inicial */}
-        <Footer /> 
+       
       </body>
     </html>
   );
