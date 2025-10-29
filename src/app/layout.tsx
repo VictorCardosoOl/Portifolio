@@ -1,22 +1,21 @@
 // src/app/layout.tsx
-import type { Metadata } from "next";
-// 1. Importa a nova fonte 'Playfair_Display'
-import { Playfair_Display } from "next/font/google"; // Remove ou comenta 'Inter'
+"use client"; 
+
+import { useRef } from 'react';
+// Removido import de Metadata pois não funciona com "use client" aqui
+import { Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
+import useLocomotiveScroll from '@/hooks/useLocomotiveScroll'; 
 
-// 2. Configura a nova fonte
 const playfair = Playfair_Display({ 
   subsets: ["latin"], 
-  variable: "--font-playfair" // Define a variável CSS que usamos no globals.css
+  variable: "--font-playfair"
 }); 
 
-export const metadata: Metadata = {
-  title: "Victor Cunha - Desenvolvedor Full Stack",
-  description: "Portfólio de Victor Cunha, mostrando projetos e habilidades em desenvolvimento web.",
-};
+// Se precisar da Metadata, defina-a na page.tsx correspondente
 
 const menuItems = [
   { label: 'Sobre', ariaLabel: 'Ir para seção Sobre', link: '/#sobre' },
@@ -37,10 +36,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  useLocomotiveScroll(mainContainerRef);
+
   return (
-    // 3. Aplica a classe da nova fonte ao HTML
     <html lang="pt-BR" className={`${playfair.variable}`}> 
       <body>
+        {/* 1. StaggeredMenu AGORA ESTÁ FORA do <main> */}
         <StaggeredMenu
           isFixed={true} 
           logoText="Victor Cunha" 
@@ -49,20 +51,27 @@ export default function RootLayout({
           socialItems={socialItems}
           displaySocials={true}
           displayItemNumbering={true}
-          // 4. Ajusta as cores do botão do menu para o tema claro
-          menuButtonColor="#333333" // Botão escuro no fundo branco
-          openMenuButtonColor="#FFFFFF" // Botão branco no painel verde (ajustar cor do painel no CSS)
+          menuButtonColor="#333333" 
+          openMenuButtonColor="#FFFFFF" 
           changeMenuColorOnOpen={true}
-          accentColor="#A8D8B9" // Verde pastel principal
-          // 5. Ajusta as cores das camadas de fundo do menu
-          colors={['#E0F2E9', '#A8D8B9']} // Tons de verde pastel
+          accentColor="#A8D8B9" 
+          colors={['#E0F2E9', '#A8D8B9']} 
         />
         
-        <main className="main-content">
+        {/* 2. O <main> continua sendo o container do scroll */}
+        <main 
+          ref={mainContainerRef} 
+          className="main-content" 
+          data-scroll-container 
+        >
           {children}
+          {/* O Footer pode ficar aqui DENTRO se você quiser que ele faça parte do scroll suave */}
+          {/* Ou FORA se ele deve ficar sempre visível ou ter comportamento diferente */}
+          {/* <Footer />  */}
         </main>
 
-        <Footer />
+        {/* 3. Coloquei o Footer FORA do main por simplicidade inicial */}
+        <Footer /> 
       </body>
     </html>
   );
