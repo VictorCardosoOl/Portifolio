@@ -1,26 +1,15 @@
 // src/app/layout.tsx
 "use client"; 
 
-import { useRef } from 'react';
-// Importa Manrope junto com Playfair_Display
-import { Playfair_Display, Manrope } from "next/font/google";
+import { useRef, useState } from 'react'; // 1. Importa o useState
+// 2. REMOVEMOS as importações de 'next/font/google'
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
 import useLocomotiveScroll from '@/hooks/useLocomotiveScroll'; 
 
-const playfair = Playfair_Display({ 
-  subsets: ["latin"], 
-  variable: "--font-playfair"
-}); 
-
-// 1. Configura a nova fonte Manrope
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  weight: ['400', '500', '700'] // Pesos que vamos usar
-});
+// 3. REMOVEMOS as constantes 'playfair' e 'manrope'
 
 const menuItems = [
   { label: 'Sobre', ariaLabel: 'Ir para seção Sobre', link: '/#sobre' },
@@ -42,11 +31,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const mainContainerRef = useRef<HTMLDivElement>(null);
-  useLocomotiveScroll(mainContainerRef);
+  // 4. Cria o estado de "pronto"
+  const [isReady, setIsReady] = useState(false);
+
+  // 5. Passa o setIsReady para o hook
+  useLocomotiveScroll(mainContainerRef, setIsReady);
 
   return (
-    // 2. Adiciona a variável da fonte Manrope ao HTML
-    <html lang="pt-BR" className={`${playfair.variable} ${manrope.variable}`}> 
+    // 6. REMOVEMOS as classes de fonte da tag <html>
+    <html lang="pt-BR"> 
       <body>
         <StaggeredMenu
           isFixed={true} 
@@ -56,11 +49,11 @@ export default function RootLayout({
           socialItems={socialItems}
           displaySocials={true}
           displayItemNumbering={true}
-          menuButtonColor="#FFFFFF" // 3. MUDADO para branco
-          openMenuButtonColor="#FFFFFF" // MUDADO para branco
+          menuButtonColor="#FFFFFF"
+          openMenuButtonColor="#FFFFFF"
           changeMenuColorOnOpen={true}
           accentColor="#A8D8B9" 
-          colors={['#1A1A1A', '#222222']} // Cores do painel para o dark mode
+          colors={['#1A1A1A', '#222222']}
         />
         
         <main 
@@ -68,8 +61,9 @@ export default function RootLayout({
           className="main-content" 
           data-scroll-container 
         >
-          {children}
-          <Footer />  
+          {/* 7. Só renderiza o conteúdo QUANDO estiver pronto */}
+          {isReady && children}
+          {isReady && <Footer />}
         </main>
       </body>
     </html>

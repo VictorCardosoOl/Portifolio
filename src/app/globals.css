@@ -1,21 +1,56 @@
 /* src/app/globals.css */
 
-/* 1. Define as novas variáveis de cor (Dark Mode) e fonte */
-:root {
-  /* Cores - NOVA PALETA (Dark Mode) */
-  --color-background-light: #121212; /* Fundo principal escuro */
-  --color-background-accent: #1A1A1A; /* Fundo secundário (ligeiramente mais claro) */
-  --color-text-primary: #E0E0E0; /* Texto principal claro */
-  --color-text-secondary: #A0A0A0; /* Texto secundário cinza */
-  --color-text-highlight: #FFFFFF; /* Títulos em branco */
-  
-  --color-primary: #A8D8B9; /* Verde pastel principal (MANTIDO como destaque) */
-  --color-primary-dark: #C1E6D0; /* Verde mais claro para hover */
-  --color-border: #333333; /* Bordas escuras */
+/* 1. REMOVIDO @font-face da General Sans */
 
-  /* Fontes */
-  --font-primary: var(--font-manrope), sans-serif; /* Fonte principal (corpo) */
-  --font-display: var(--font-playfair), serif; /* Fonte de destaque (títulos) */
+/* 2. ADICIONADO @font-face da Satoshi com os caminhos corretos */
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* 3. Atualiza o :root para USAR a fonte 'Satoshi' */
+:root {
+  /* Cores (Mantém o Dark Mode) */
+  --color-background-light: #121212;
+  --color-background-accent: #1A1A1A;
+  --color-text-primary: #E0E0E0;
+  --color-text-secondary: #A0A0A0;
+  --color-text-highlight: #FFFFFF;
+  --color-primary: #A8D8B9;
+  --color-primary-dark: #C1E6D0;
+  --color-border: #333333;
+
+  /* 4. MUDADO de 'General Sans' para 'Satoshi' */
+  --font-primary: 'Satoshi', sans-serif;
+  --font-display: 'Satoshi', sans-serif;
 
   /* Outras variáveis */
   --border-radius-sm: 4px;
@@ -25,12 +60,12 @@
   --section-padding: 6rem 0;
 }
 
-
-/* 2. Atualiza os estilos do body */
+/* O resto do ficheiro permanece igual */
 body {
-  background-color: var(--color-background-light); /* Fundo escuro */
-  color: var(--color-text-primary); /* Texto claro */
-  font-family: var(--font-primary); /* Aplica a nova fonte de corpo */
+  background-color: var(--color-background-light);
+  color: var(--color-text-primary);
+  font-family: var(--font-primary);
+  font-weight: 400; 
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -50,14 +85,12 @@ a {
     box-sizing: border-box;
 }
 
-/* 3. Adiciona estilos globais para títulos (usando a fonte display) */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   color: var(--color-text-highlight);
-  font-weight: 700;
+  font-weight: 700; 
 }
 
-/* 4. (Opcional) Adiciona estilos globais para links se necessário */
 a:hover {
-  color: var(--color-primary-dark); /* Links ficam verde claro no hover */
+  color: var(--color-primary-dark);
 }
