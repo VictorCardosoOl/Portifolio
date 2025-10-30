@@ -2,8 +2,8 @@
 "use client"; 
 
 import { useRef } from 'react';
-// Removido import de Metadata pois não funciona com "use client" aqui
-import { Playfair_Display } from "next/font/google";
+// Importa Manrope junto com Playfair_Display
+import { Playfair_Display, Manrope } from "next/font/google";
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
@@ -15,7 +15,12 @@ const playfair = Playfair_Display({
   variable: "--font-playfair"
 }); 
 
-// Se precisar da Metadata, defina-a na page.tsx correspondente
+// 1. Configura a nova fonte Manrope
+const manrope = Manrope({
+  subsets: ['latin'],
+  variable: '--font-manrope',
+  weight: ['400', '500', '700'] // Pesos que vamos usar
+});
 
 const menuItems = [
   { label: 'Sobre', ariaLabel: 'Ir para seção Sobre', link: '/#sobre' },
@@ -40,9 +45,9 @@ export default function RootLayout({
   useLocomotiveScroll(mainContainerRef);
 
   return (
-    <html lang="pt-BR" className={`${playfair.variable}`}> 
+    // 2. Adiciona a variável da fonte Manrope ao HTML
+    <html lang="pt-BR" className={`${playfair.variable} ${manrope.variable}`}> 
       <body>
-        {/* 1. StaggeredMenu AGORA ESTÁ FORA do <main> */}
         <StaggeredMenu
           isFixed={true} 
           logoText="Victor Cunha" 
@@ -51,27 +56,21 @@ export default function RootLayout({
           socialItems={socialItems}
           displaySocials={true}
           displayItemNumbering={true}
-          menuButtonColor="#333333" 
-          openMenuButtonColor="#FFFFFF" 
+          menuButtonColor="#FFFFFF" // 3. MUDADO para branco
+          openMenuButtonColor="#FFFFFF" // MUDADO para branco
           changeMenuColorOnOpen={true}
           accentColor="#A8D8B9" 
-          colors={['#E0F2E9', '#A8D8B9']} 
+          colors={['#1A1A1A', '#222222']} // Cores do painel para o dark mode
         />
         
-        {/* 2. O <main> continua sendo o container do scroll */}
         <main 
           ref={mainContainerRef} 
           className="main-content" 
           data-scroll-container 
         >
           {children}
-          {/* O Footer pode ficar aqui DENTRO se você quiser que ele faça parte do scroll suave */}
-          {/* Ou FORA se ele deve ficar sempre visível ou ter comportamento diferente */}
           <Footer />  
         </main>
-
-        {/* 3. Coloquei o Footer FORA do main por simplicidade inicial */}
-       
       </body>
     </html>
   );

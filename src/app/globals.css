@@ -1,21 +1,23 @@
 /* src/app/globals.css */
 
-/* 1. Define as novas variáveis de cor e fonte no :root */
+/* 1. Define as novas variáveis de cor (Dark Mode) e fonte */
 :root {
-  /* Cores */
-  --color-background-light: #FFFFFF; /* Fundo principal branco */
-  --color-background-accent: #E0F2E9; /* Verde pastel claro para fundos alternados */
-  --color-text-primary: #333333; /* Texto principal escuro */
-  --color-text-secondary: #757575; /* Texto secundário cinza */
-  --color-text-highlight: #000000; /* Títulos em preto */
-  --color-primary: #A8D8B9; /* Verde pastel principal */
-  --color-primary-dark: #8FBC8F; /* Verde pastel escuro para hover */
-  --color-border: #E0E0E0; /* Bordas muito claras */
+  /* Cores - NOVA PALETA (Dark Mode) */
+  --color-background-light: #121212; /* Fundo principal escuro */
+  --color-background-accent: #1A1A1A; /* Fundo secundário (ligeiramente mais claro) */
+  --color-text-primary: #E0E0E0; /* Texto principal claro */
+  --color-text-secondary: #A0A0A0; /* Texto secundário cinza */
+  --color-text-highlight: #FFFFFF; /* Títulos em branco */
+  
+  --color-primary: #A8D8B9; /* Verde pastel principal (MANTIDO como destaque) */
+  --color-primary-dark: #C1E6D0; /* Verde mais claro para hover */
+  --color-border: #333333; /* Bordas escuras */
 
-  /* Fonte - A variável será definida pelo layout.tsx */
-  --font-primary: var(--font-playfair); /* Usaremos --font-playfair como exemplo */
+  /* Fontes */
+  --font-primary: var(--font-manrope), sans-serif; /* Fonte principal (corpo) */
+  --font-display: var(--font-playfair), serif; /* Fonte de destaque (títulos) */
 
-  /* Outras variáveis que possas precisar */
+  /* Outras variáveis */
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
@@ -26,9 +28,9 @@
 
 /* 2. Atualiza os estilos do body */
 body {
-  background-color: var(--color-background-light); /* Fundo branco */
-  color: var(--color-text-primary); /* Texto escuro */
-  font-family: var(--font-primary), serif; /* Aplica a nova fonte (serif como fallback) */
+  background-color: var(--color-background-light); /* Fundo escuro */
+  color: var(--color-text-primary); /* Texto claro */
+  font-family: var(--font-primary); /* Aplica a nova fonte de corpo */
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -48,7 +50,14 @@ a {
     box-sizing: border-box;
 }
 
-/* 3. (Opcional) Adiciona estilos globais para links se necessário */
+/* 3. Adiciona estilos globais para títulos (usando a fonte display) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-text-highlight);
+  font-weight: 700;
+}
+
+/* 4. (Opcional) Adiciona estilos globais para links se necessário */
 a:hover {
-  color: var(--color-primary-dark); /* Links ficam verde escuro no hover */
+  color: var(--color-primary-dark); /* Links ficam verde claro no hover */
 }

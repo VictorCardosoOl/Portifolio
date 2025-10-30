@@ -1,7 +1,6 @@
 /* src/app/page.module.css */
 
 /* --- Container Padrão --- */
-/* Estilos herdados de globals.css ou mantidos se específicos */
 .container {
   width: 100%;
   max-width: 1100px;
@@ -14,12 +13,10 @@
 /* --- Título de Seção Padrão --- */
 .sectionTitle {
   font-size: clamp(2.5rem, 6vw, 3.5rem);
-  font-weight: 700; /* Playfair Display já é elegante, talvez um peso menor funcione bem */
+  font-weight: 700;
   margin-bottom: 3rem;
-  color: var(--color-text-highlight); /* Texto de destaque (preto/cinza escuro) */
+  color: var(--color-text-highlight);
   text-align: center;
-  /* Considerar remover letter-spacing negativo com fontes serifadas */
-  /* letter-spacing: -0.02em; */
 }
 
 /* --- Botões Padrão --- */
@@ -28,8 +25,7 @@
   padding: 0.8rem 2rem;
   border-radius: 50px;
   font-size: 1rem;
-  /* Fontes serifadas podem precisar de um peso menor para botões */
-  font-weight: 600; /* Ou 500 */
+  font-weight: 600; /* Usando a fonte Manrope, 600 fica bom */
   text-align: center;
   text-decoration: none;
   cursor: pointer;
@@ -38,27 +34,27 @@
 }
 
 .btnPrimary {
-  background: var(--color-primary); /* Verde pastel principal */
-  color: var(--color-text-primary); /* Texto escuro */
-  box-shadow: 0 4px 15px rgba(168, 216, 185, 0.4); /* Sombra verde suave */
+  background: var(--color-primary);
+  color: var(--color-background-light); /* Texto escuro/preto no botão verde */
+  box-shadow: 0 4px 15px rgba(168, 216, 185, 0.2); /* Sombra verde suave */
 }
 
 .btnPrimary:hover {
-  background: var(--color-primary-dark); /* Verde escuro */
-  color: var(--color-background-light); /* Texto branco no hover escuro */
+  background: var(--color-primary-dark);
+  color: var(--color-background-light);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(143, 188, 143, 0.5);
+  box-shadow: 0 6px 20px rgba(168, 216, 185, 0.3);
 }
 
 .btnSecondary {
   background: transparent;
-  color: var(--color-primary-dark); /* Verde escuro */
-  border-color: var(--color-primary); /* Borda verde principal */
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary);
 }
 
 .btnSecondary:hover {
-  background: var(--color-primary-dark); /* Fundo verde escuro */
-  color: var(--color-background-light); /* Texto branco */
+  background: var(--color-primary-dark);
+  color: var(--color-background-light);
   border-color: var(--color-primary-dark);
   transform: translateY(-2px);
 }
@@ -73,41 +69,40 @@
   justify-content: center;
   text-align: center;
   padding: 6rem var(--container-padding) 4rem;
-  background: var(--color-background-light); /* Fundo branco */
-  /* background: linear-gradient(135deg, #FFFFFF 0%, #F5FFFA 100%); /* Gradiente sutil opcional */
-  color: var(--color-text-primary); /* Texto escuro */
+  background: var(--color-background-light);
+  color: var(--color-text-primary);
   position: relative;
   overflow: hidden;
 }
 
 .heroTitle {
-  font-size: clamp(3rem, 10vw, 5.5rem); /* Ajuste leve no tamanho máximo */
-  font-weight: 700; /* Playfair pode precisar de menos peso */
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--color-text-highlight);
-  opacity: 0; /* Para animação */
-  animation: fadeInUp 0.8s 0.1s ease-out forwards;
+  /* REMOVIDO opacity: 0; */
+  /* REMOVIDO animation: ...; */
 }
 
 .heroSubtitle {
   font-size: clamp(1.25rem, 4vw, 1.75rem);
-  font-weight: 400; /* Peso normal para subtítulo */
+  font-weight: 400;
   margin-bottom: 1rem;
-  color: var(--color-primary-dark); /* Verde escuro */
-  opacity: 0;
-  animation: fadeInUp 0.8s 0.3s ease-out forwards;
+  color: var(--color-primary-dark);
+  /* REMOVIDO opacity: 0; */
+  /* REMOVIDO animation: ...; */
 }
 
 .heroTagline {
   font-size: clamp(1rem, 3vw, 1.25rem);
   margin-bottom: 2.5rem;
-  color: var(--color-text-secondary); /* Cinza secundário */
+  color: var(--color-text-secondary);
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.7;
-  opacity: 0;
-  animation: fadeInUp 0.8s 0.5s ease-out forwards;
+  /* REMOVIDO opacity: 0; */
+  /* REMOVIDO animation: ...; */
 }
 
 .heroActions {
@@ -115,8 +110,8 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  opacity: 0;
-  animation: fadeInUp 0.8s 0.7s ease-out forwards;
+  /* REMOVIDO opacity: 0; */
+  /* REMOVIDO animation: ...; */
 }
 
 .scrollIndicator {
@@ -124,7 +119,7 @@
   bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
-  color: rgba(0, 0, 0, 0.3); /* Indicador escuro e suave */
+  color: rgba(255, 255, 255, 0.3); /* Indicador claro e suave */
   animation: bounce 2s infinite;
 }
 .scrollIndicator svg {
@@ -135,19 +130,18 @@
 /* --- Seção Sobre --- */
 .aboutSection {
   padding: var(--section-padding);
-  background-color: var(--color-background-accent); /* Fundo verde pastel claro */
+  background-color: var(--color-background-accent);
   color: var(--color-text-secondary);
 }
 .aboutContainer {
   max-width: 800px;
 }
 .aboutContent {
-  text-align: center; /* Ou justify para texto mais formal */
-  /* text-align: justify; */
+  text-align: center;
 }
 .aboutContent p {
   font-size: 1.1rem;
-  line-height: 1.9; /* Aumenta um pouco o espaçamento entre linhas */
+  line-height: 1.9;
   margin-bottom: 1.5rem;
   color: var(--color-text-primary);
 }
@@ -155,7 +149,7 @@
 /* --- Seção Acadêmica --- */
 .academicSection {
   padding: var(--section-padding);
-  background-color: var(--color-background-light); /* Fundo branco */
+  background-color: var(--color-background-light);
   color: var(--color-text-secondary);
 }
 .academicList {
@@ -166,16 +160,16 @@
   margin: 0 auto;
 }
 .academicItem {
-  background-color: #fdfdfd; /* Fundo do item quase branco */
+  background-color: var(--color-background-accent); /* MUDADO */
   padding: 1.5rem;
   border-radius: var(--border-radius-md);
-  border-left: 4px solid var(--color-primary); /* Borda verde */
+  border-left: 4px solid var(--color-primary);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04); /* Sombra inicial mais suave */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil escura */
 }
 .academicItem:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Sombra mais visível no hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra mais visível no hover */
 }
 .academicCourse {
   font-size: 1.3rem;
@@ -192,7 +186,7 @@
 /* --- Seção Habilidades --- */
 .skillsSection {
   padding: var(--section-padding);
-  background-color: var(--color-background-accent); /* Fundo verde pastel claro */
+  background-color: var(--color-background-accent);
 }
 .skillsGrid {
   display: flex;
@@ -201,8 +195,8 @@
   gap: 0.75rem;
 }
 .skillTag {
-  background-color: rgba(255, 255, 255, 0.7); /* Tag branca semi-transparente */
-  color: var(--color-text-primary);
+  background-color: var(--color-background-accent); /* MUDADO */
+  color: var(--color-text-secondary); /* MUDADO */
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius-sm);
   font-size: 0.9rem;
@@ -211,15 +205,15 @@
   cursor: default;
 }
 .skillTag:hover {
-  background-color: var(--color-primary); /* Fundo verde */
-  color: var(--color-text-primary); /* Texto escuro */
+  background-color: var(--color-primary);
+  color: var(--color-background-light); /* Texto claro (preto/escuro) */
   border-color: var(--color-primary);
 }
 
 /* --- Seção Projetos --- */
 .projectsSection {
   padding: var(--section-padding);
-  background-color: var(--color-background-light); /* Fundo branco */
+  background-color: var(--color-background-light);
 }
 .projectsContainer {
   max-width: 1200px;
@@ -227,25 +221,23 @@
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem; /* Aumenta um pouco o gap */
+  gap: 2.5rem;
 }
 .projectCard {
-  background-color: #FFFFFF;
+  background-color: var(--color-background-accent); /* MUDADO */
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra escura sutil */
 }
 .projectCard:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   border-color: var(--color-primary);
 }
-/* Espaço para imagem (opcional) */
-/* .projectCardImage { height: 200px; background-color: #eee; } */
 
 .projectCardContent {
   padding: 1.5rem;
@@ -263,7 +255,7 @@
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
   flex-grow: 1;
-  line-height: 1.7; /* Aumenta um pouco */
+  line-height: 1.7;
 }
 .projectTags {
   display: flex;
@@ -272,10 +264,10 @@
   margin-bottom: 1rem;
 }
 .projectTag {
-  background-color: var(--color-background-accent); /* Fundo verde claro */
-  color: var(--color-primary-dark); /* Texto verde escuro */
+  background-color: var(--color-primary); /* Fundo verde */
+  color: var(--color-background-light); /* Texto claro (preto/escuro) */
   font-size: 0.75rem;
-  font-weight: 500; /* Mais peso para tags */
+  font-weight: 500;
   padding: 0.3rem 0.7rem;
   border-radius: 50px;
 }
@@ -288,23 +280,23 @@
   border-top: 1px solid var(--color-border);
 }
 .projectLink {
-  color: var(--color-primary-dark); /* Verde escuro */
+  color: var(--color-primary-dark);
   text-decoration: none;
-  font-weight: 600; /* Links mais destacados */
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
   transition: color 0.2s ease;
 }
 .projectLink:hover {
-  color: var(--color-primary); /* Verde principal */
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
 /* --- Seção Contato --- */
 .contactSection {
   padding: var(--section-padding);
-  background-color: var(--color-background-accent); /* Fundo verde claro */
+  background-color: var(--color-background-accent);
   text-align: center;
 }
 .contactText {
@@ -323,10 +315,6 @@
 
 /* --- Responsividade Geral --- */
 @media (max-width: 768px) {
-  /* :root {
-    --container-padding: 1.5rem; // Já definido em globals.css? Se sim, remover daqui
-    --section-padding: 4rem 0; // Já definido em globals.css? Se sim, remover daqui
-  } */
   .sectionTitle {
     margin-bottom: 2rem;
   }
@@ -342,10 +330,6 @@
 }
 
 @media (max-width: 480px) {
-  /* :root {
-    --container-padding: 1rem; // Já definido em globals.css? Se sim, remover daqui
-    --section-padding: 3rem 0; // Já definido em globals.css? Se sim, remover daqui
-  } */
   .heroTitle {
     font-size: 2.5rem;
   }
@@ -374,10 +358,8 @@
 }
 
 /* --- Animações --- */
-@keyframes fadeInUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+/* REMOVIDO @keyframes fadeInUp */
+
 @keyframes bounce { /* Mantém a mesma animação */
   0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
   40% { transform: translate(-50%, -10px); }

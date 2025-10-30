@@ -1,10 +1,16 @@
 // src/app/page.tsx
-import React from 'react';
-import Link from 'next/link';
-import { FaGithub, FaLinkedin, FaBriefcase, FaGraduationCap, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa'; // Adicionando FaExternalLinkAlt
-import styles from './page.module.css'; // Importa o CSS Module
+"use client"; // Necessário para usar hooks como useRef
 
-// Dados do Portfólio (mantidos aqui por enquanto)
+import React, { useRef } from 'react'; // Importa useRef
+import Link from 'next/link';
+import { FaGithub, FaLinkedin, FaBriefcase, FaGraduationCap, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa';
+import styles from './page.module.css';
+
+// Importa os novos hooks de animação
+import { useFadeInUp } from '@/hooks/useFadeInUp';
+import { useMagneticButton } from '@/hooks/useMagneticButton';
+
+// Dados do Portfólio (mantidos)
 const portfolioData = {
   name: "Victor Cunha",
   title: "Desenvolvedor Full Stack",
@@ -50,19 +56,86 @@ const portfolioData = {
 
 
 export default function Home() {
+  
+  // --- 1. Definir Refs para animações ---
+  const heroTitleRef = useRef(null);
+  const heroSubtitleRef = useRef(null);
+  const heroTaglineRef = useRef(null);
+  const heroActionsRef = useRef(null);
+  const aboutTitleRef = useRef(null);
+  const aboutContentRef = useRef(null);
+  const academicTitleRef = useRef(null);
+  const academicListRef = useRef(null);
+  const skillsTitleRef = useRef(null);
+  const skillsGridRef = useRef(null);
+  const projectsTitleRef = useRef(null);
+  const projectsGridRef = useRef(null);
+  const contactTitleRef = useRef(null);
+  const contactTextRef = useRef(null);
+  const contactButtonRef = useRef(null);
+
+  // Refs para botões magnéticos
+  const magneticBtn1Ref = useRef(null);
+  const magneticBtn2Ref = useRef(null);
+
+  // --- 2. Aplicar Hooks de Animação ---
+  
+  // Hero
+  useFadeInUp(heroTitleRef, 0.1);
+  useFadeInUp(heroSubtitleRef, 0.3);
+  useFadeInUp(heroTaglineRef, 0.5);
+  useFadeInUp(heroActionsRef, 0.7);
+
+  // Sobre
+  useFadeInUp(aboutTitleRef, 0.1);
+  useFadeInUp(aboutContentRef, 0.3);
+
+  // Acadêmico
+  useFadeInUp(academicTitleRef, 0.1);
+  useFadeInUp(academicListRef, 0.3); // Pode aplicar ao container da lista
+
+  // Habilidades
+  useFadeInUp(skillsTitleRef, 0.1);
+  useFadeInUp(skillsGridRef, 0.3); // Pode aplicar ao grid
+
+  // Projetos
+  useFadeInUp(projectsTitleRef, 0.1);
+  useFadeInUp(projectsGridRef, 0.3); // Pode aplicar ao grid
+
+  // Contato
+  useFadeInUp(contactTitleRef, 0.1);
+  useFadeInUp(contactTextRef, 0.3);
+  useFadeInUp(contactButtonRef, 0.5);
+
+  // Hooks Magnéticos
+  useMagneticButton(magneticBtn1Ref, 0.4);
+  useMagneticButton(magneticBtn2Ref, 0.4);
+  useMagneticButton(contactButtonRef, 0.4); // Aplicando no botão de contato também
+
+
   return (
     <>
+      {/* --- 3. Adicionar 'data-scroll-section' e 'refs' --- */}
+      
       {/* ========== Hero Section ========== */}
-      <section id="inicio" className={styles.heroSection}>
-        <div className={styles.container}> {/* Container geral */}
-          <h1 className={styles.heroTitle}>{portfolioData.name}</h1>
-          <p className={styles.heroSubtitle}>{portfolioData.title}</p>
-          <p className={styles.heroTagline}>{portfolioData.heroTagline}</p>
-          <div className={styles.heroActions}>
-             <Link href="/#projetos" className={`${styles.btn} ${styles.btnPrimary}`}>
+      <section id="inicio" className={styles.heroSection} data-scroll-section>
+        <div className={styles.container}>
+          <h1 ref={heroTitleRef} className={styles.heroTitle}>{portfolioData.name}</h1>
+          <p ref={heroSubtitleRef} className={styles.heroSubtitle}>{portfolioData.title}</p>
+          <p ref={heroTaglineRef} className={styles.heroTagline}>{portfolioData.heroTagline}</p>
+          <div ref={heroActionsRef} className={styles.heroActions}>
+             <Link 
+                ref={magneticBtn1Ref}
+                href="/#projetos" 
+                className={`${styles.btn} ${styles.btnPrimary}`}
+             >
                 Meus Projetos
              </Link>
-             <Link href="/#contato" className={`${styles.btn} ${styles.btnSecondary}`}>
+             <Link 
+                ref={magneticBtn2Ref}
+                href="/#contato" 
+                className={`${styles.btn} ${styles.btnSecondary}`}
+             >
                 Entre em Contato
              </Link>
           </div>
@@ -75,10 +148,10 @@ export default function Home() {
       </section>
 
       {/* ========== About Section ========== */}
-      <section id="sobre" className={styles.aboutSection}>
-        <div className={`${styles.container} ${styles.aboutContainer}`}> {/* Container com classe específica */}
-          <h2 className={styles.sectionTitle}>Sobre Mim</h2>
-          <div className={styles.aboutContent}>
+      <section id="sobre" className={styles.aboutSection} data-scroll-section>
+        <div className={`${styles.container} ${styles.aboutContainer}`}>
+          <h2 ref={aboutTitleRef} className={styles.sectionTitle}>Sobre Mim</h2>
+          <div ref={aboutContentRef} className={styles.aboutContent}>
             {portfolioData.aboutMe.map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
@@ -87,10 +160,10 @@ export default function Home() {
       </section>
 
       {/* ========== Academic Section ========== */}
-      <section id="academico" className={styles.academicSection}>
+      <section id="academico" className={styles.academicSection} data-scroll-section>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Formação Acadêmica</h2>
-          <div className={styles.academicList}>
+          <h2 ref={academicTitleRef} className={styles.sectionTitle}>Formação Acadêmica</h2>
+          <div ref={academicListRef} className={styles.academicList}>
             {portfolioData.academic.map((item, index) => (
               <div key={index} className={styles.academicItem}>
                 <h3 className={styles.academicCourse}>{item.course}</h3>
@@ -103,10 +176,10 @@ export default function Home() {
       </section>
 
       {/* ========== Skills Section ========== */}
-      <section id="habilidades" className={styles.skillsSection}>
+      <section id="habilidades" className={styles.skillsSection} data-scroll-section>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Habilidades</h2>
-          <div className={styles.skillsGrid}>
+          <h2 ref={skillsTitleRef} className={styles.sectionTitle}>Habilidades</h2>
+          <div ref={skillsGridRef} className={styles.skillsGrid}>
             {portfolioData.skills.map((skill) => (
               <span key={skill} className={styles.skillTag}>
                 {skill}
@@ -117,10 +190,10 @@ export default function Home() {
       </section>
 
       {/* ========== Projects Section ========== */}
-      <section id="projetos" className={styles.projectsSection}>
-        <div className={`${styles.container} ${styles.projectsContainer}`}> {/* Container mais largo */}
-          <h2 className={styles.sectionTitle}>Projetos</h2>
-          <div className={styles.projectsGrid}>
+      <section id="projetos" className={styles.projectsSection} data-scroll-section>
+        <div className={`${styles.container} ${styles.projectsContainer}`}>
+          <h2 ref={projectsTitleRef} className={styles.sectionTitle}>Projetos</h2>
+          <div ref={projectsGridRef} className={styles.projectsGrid}>
             {portfolioData.projects.map((project, index) => (
               <div key={index} className={styles.projectCard}>
                 <div className={styles.projectCardContent}>
@@ -151,13 +224,14 @@ export default function Home() {
       </section>
 
       {/* ========== Contact Section ========== */}
-      <section id="contato" className={styles.contactSection}>
+      <section id="contato" className={styles.contactSection} data-scroll-section>
         <div className={styles.container}>
-          <h2 className={styles.sectionTitle}>Entre em Contato</h2>
-          <p className={styles.contactText}>
+          <h2 ref={contactTitleRef} className={styles.sectionTitle}>Entre em Contato</h2>
+          <p ref={contactTextRef} className={styles.contactText}>
             Gostou do que viu? Vamos conversar sobre como posso ajudar no seu próximo projeto!
           </p>
           <a
+            ref={contactButtonRef}
             href={`mailto:${portfolioData.contactEmail}`}
             className={`${styles.btn} ${styles.btnPrimary} ${styles.contactButton}`}
           >
@@ -165,9 +239,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-
-      {/* Espaço extra no final */}
-      {/* <div className={styles.bottomSpacer}></div> */}
     </>
   );
 }
