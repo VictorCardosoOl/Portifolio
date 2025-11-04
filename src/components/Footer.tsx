@@ -1,13 +1,23 @@
 // src/components/Footer.tsx
 import React from 'react';
-// Importa os ícones específicos que você quer usar
 import { FaGithub, FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import './Footer.css';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="main-footer footer" id="footer">
+    /* * ==================
+      * CORREÇÃO (PASSO 2)
+      * ==================
+      * Adicione o atributo 'data-scroll-section' aqui.
+      * Isso informa ao Locomotive Scroll que este elemento
+      * é uma seção rolável.
+    */
+    <footer 
+      className="main-footer footer" 
+      id="footer" 
+      data-scroll-section 
+    >
       <div className="footer-content">
         <div className="menu-container">
           <a href="#" className="portfolio-link">Portfolio</a>
@@ -19,18 +29,17 @@ const Footer = () => {
           <br />
           <a className="phone" href="tel:+5511977440146">(11) 97744-0146</a>
           <div className="social-links">
-            {/* Substitui <i> por componentes React Icon */}
             <a target="_blank" rel="noopener noreferrer" href="https://github.com/VictorCardosoOl" aria-label="GitHub">
-              <FaGithub /> {/* Ícone do GitHub */}
+              <FaGithub />
             </a>
             <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/hi.chicocdo/" aria-label="Instagram">
-              <FaInstagram /> {/* Ícone do Instagram */}
+              <FaInstagram />
             </a>
             <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/victor-card-cunha/" aria-label="LinkedIn">
-              <FaLinkedin /> {/* Ícone do LinkedIn */}
+              <FaLinkedin />
             </a>
             <a target="_blank" rel="noopener noreferrer" href="https://wa.me/5511977440146" aria-label="WhatsApp">
-              <FaWhatsapp /> {/* Ícone do WhatsApp */}
+              <FaWhatsapp />
             </a>
           </div>
         </div>

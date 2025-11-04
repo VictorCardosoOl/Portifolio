@@ -1,28 +1,19 @@
 // src/app/layout.tsx
 "use client"; 
 
-import { useRef, useState } from 'react'; // 1. Importa o useState
-// 2. REMOVEMOS as importações de 'next/font/google'
+import { useRef, useState } from 'react';
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
 import useLocomotiveScroll from '@/hooks/useLocomotiveScroll'; 
 
-// 3. REMOVEMOS as constantes 'playfair' e 'manrope'
-
 const menuItems = [
-  { label: 'Sobre', ariaLabel: 'Ir para seção Sobre', link: '/#sobre' },
-  { label: 'Projetos', ariaLabel: 'Ver meus projetos', link: '/#projetos' },
-  { label: 'Habilidades', ariaLabel: 'Ver minhas habilidades', link: '/#habilidades' },
-  { label: 'Contato', ariaLabel: 'Entrar em contato', link: '/#contato' }
+  // ... (seus menuItems)
 ];
 
 const socialItems = [
-  { label: 'GitHub', link: 'https://github.com/VictorCardosoOl' },
-  { label: 'LinkedIn', link: 'https://www.linkedin.com/in/victor-card-cunha/' },
-  { label: 'Instagram', link: 'https://www.instagram.com/hi.chicocdo/' },
-  { label: 'WhatsApp', link: 'https://wa.me/5511977440146' }
+  // ... (seus socialItems)
 ];
 
 export default function RootLayout({
@@ -31,14 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const mainContainerRef = useRef<HTMLDivElement>(null);
-  // 4. Cria o estado de "pronto"
   const [isReady, setIsReady] = useState(false);
 
-  // 5. Passa o setIsReady para o hook
   useLocomotiveScroll(mainContainerRef, setIsReady);
 
   return (
-    // 6. REMOVEMOS as classes de fonte da tag <html>
     <html lang="pt-BR"> 
       <body>
         <StaggeredMenu
@@ -61,10 +49,20 @@ export default function RootLayout({
           className="main-content" 
           data-scroll-container 
         >
-          {/* 7. Só renderiza o conteúdo QUANDO estiver pronto */}
+          {/* O conteúdo da página (page.tsx) */}
           {isReady && children}
+          
+          {/* * ==================
+            * CORREÇÃO (PASSO 1)
+            * ==================
+            * O Footer DEVE estar DENTRO do <main data-scroll-container>
+            * Todas as seções (incluindo o footer) precisam estar aqui.
+          */}
           {isReady && <Footer />}
-        </main>
+          
+        </main> 
+        {/* O MAIN TERMINA AQUI, ABRAÇANDO TUDO */}
+
       </body>
     </html>
   );
