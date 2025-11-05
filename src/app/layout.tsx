@@ -8,12 +8,21 @@ import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
 import useLocomotiveScroll from '@/hooks/useLocomotiveScroll'; 
 
+// --- ATUALIZAÇÃO: Itens de Menu e Sociais ---
+// Preenchi com base nas seções da sua page.tsx e dados do Footer.tsx
 const menuItems = [
-  // ... (seus menuItems)
+  { label: "Início", ariaLabel: "Ir para o início", link: "/#inicio" },
+  { label: "Sobre", ariaLabel: "Ir para sobre mim", link: "/#sobre" },
+  { label: "Projetos", ariaLabel: "Ir para projetos", link: "/#projetos" },
+  { label: "Habilidades", ariaLabel: "Ir para habilidades", link: "/#habilidades" },
+  { label: "Contato", ariaLabel: "Ir para contato", link: "/#contato" },
 ];
 
 const socialItems = [
-  // ... (seus socialItems)
+  { label: "GitHub", link: "https://github.com/VictorCardosoOl" },
+  { label: "LinkedIn", link: "https://www.linkedin.com/in/victor-card-cunha/" },
+  { label: "Instagram", link: "https://www.instagram.com/hi.chicocdo/" },
+  { label: "WhatsApp", link: "https://wa.me/5511977440146" },
 ];
 
 export default function RootLayout({
@@ -29,6 +38,8 @@ export default function RootLayout({
   return (
     <html lang="pt-BR"> 
       <body>
+        
+        {/* --- ATUALIZAÇÃO: Props do Menu para o Tema Claro --- */}
         <StaggeredMenu
           isFixed={true} 
           logoText="Victor Cunha" 
@@ -37,11 +48,13 @@ export default function RootLayout({
           socialItems={socialItems}
           displaySocials={true}
           displayItemNumbering={true}
-          menuButtonColor="#FFFFFF"
-          openMenuButtonColor="#FFFFFF"
+          
+          /* Cores atualizadas para o tema claro */
+          menuButtonColor="#121212"     /* Botão do menu (fechado) em preto */
+          openMenuButtonColor="#121212" /* Botão do menu (aberto) em preto */
           changeMenuColorOnOpen={true}
-          accentColor="#A8D8B9" 
-          colors={['#1A1A1A', '#222222']}
+          accentColor="#121212"         /* Cor de acento (números, hovers) em preto */
+          colors={['#FFFFFF', '#F5F5F5']} /* Cores dos painéis do menu (branco e cinza claro) */
         />
         
         <main 
@@ -49,19 +62,12 @@ export default function RootLayout({
           className="main-content" 
           data-scroll-container 
         >
-          {/* O conteúdo da página (page.tsx) */}
           {isReady && children}
           
-          {/* * ==================
-            * CORREÇÃO (PASSO 1)
-            * ==================
-            * O Footer DEVE estar DENTRO do <main data-scroll-container>
-            * Todas as seções (incluindo o footer) precisam estar aqui.
-          */}
+          {/* Footer dentro do main (Correto!) */}
           {isReady && <Footer />}
           
         </main> 
-        {/* O MAIN TERMINA AQUI, ABRAÇANDO TUDO */}
 
       </body>
     </html>

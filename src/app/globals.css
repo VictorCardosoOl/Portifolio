@@ -1,8 +1,6 @@
 /* src/app/globals.css */
 
-/* 1. REMOVIDO @font-face da General Sans */
-
-/* 2. ADICIONADO @font-face da Satoshi com os caminhos corretos */
+/* 1. Fontes Satoshi (Mantidas - Ótima escolha!) */
 @font-face {
   font-family: 'Satoshi';
   src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.woff2') format('woff2');
@@ -10,7 +8,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Satoshi';
   src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Medium.woff2') format('woff2');
@@ -18,7 +15,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Satoshi';
   src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Bold.woff2') format('woff2');
@@ -26,7 +22,6 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: 'Satoshi';
   src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Black.woff2') format('woff2');
@@ -36,23 +31,23 @@
 }
 
 
-/* 3. Atualiza o :root para USAR a fonte 'Satoshi' */
+/* 2. ATUALIZAÇÃO DA PALETA: "Light Mode" (Branco com detalhes Pretos) */
 :root {
-  /* Cores (Mantém o Dark Mode) */
-  --color-background-light: #121212;
-  --color-background-accent: #1A1A1A;
-  --color-text-primary: #E0E0E0;
-  --color-text-secondary: #A0A0A0;
-  --color-text-highlight: #FFFFFF;
-  --color-primary: #A8D8B9;
-  --color-primary-dark: #C1E6D0;
-  --color-border: #333333;
+  /* Cores (Novo Light Mode) */
+  --color-background-light: #FFFFFF; /* Fundo principal branco */
+  --color-background-accent: #F5F5F5; /* Um cinza muito claro para fundos de seção */
+  --color-text-primary: #1A1A1A;     /* Texto principal (preto suave) */
+  --color-text-secondary: #555555;   /* Texto secundário (cinza escuro) */
+  --color-text-highlight: #000000;   /* Títulos e destaques (preto puro) */
+  --color-primary: #121212;          /* Cor primária (preto, antes era verde) */
+  --color-primary-dark: #333333;     /* Variação da cor primária (cinza escuro) */
+  --color-border: #E0E0E0;           /* Cor das bordas (cinza claro) */
 
-  /* 4. MUDADO de 'General Sans' para 'Satoshi' */
+  /* 3. Fontes (Mantidas) */
   --font-primary: 'Satoshi', sans-serif;
   --font-display: 'Satoshi', sans-serif;
 
-  /* Outras variáveis */
+  /* Outras variáveis (Mantidas) */
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
@@ -60,10 +55,10 @@
   --section-padding: 6rem 0;
 }
 
-/* O resto do ficheiro permanece igual */
+/* 4. Estilos de base atualizados para Light Mode */
 body {
-  background-color: var(--color-background-light);
-  color: var(--color-text-primary);
+  background-color: var(--color-background-light); /* Fundo branco */
+  color: var(--color-text-primary);                 /* Texto escuro */
   font-family: var(--font-primary);
   font-weight: 400; 
   margin: 0;
@@ -87,10 +82,10 @@ a {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  color: var(--color-text-highlight);
+  color: var(--color-text-highlight); /* Títulos em preto */
   font-weight: 700; 
 }
 
 a:hover {
-  color: var(--color-primary-dark);
+  color: var(--color-text-secondary); /* Hover para cinza */
 }
