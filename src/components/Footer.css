@@ -1,12 +1,16 @@
 /* src/components/Footer.css */
 
 .footer {
-  --bg-gray: #f5f5f5;
-  --text-black: #000000;
-  --text-gray: #666666;
-  --text-light: #999999;
-  --border-color: #e5e5e5;
-  --hover-black: #333333;
+  /* --- REATORAÇÃO DE TEMA --- */
+  /* Substituído por variáveis globais do seu globals.css */
+  --bg-gray: var(--color-background-accent);
+  --text-black: var(--color-text-highlight);
+  --text-gray: var(--color-text-secondary);
+  --text-light: #999999; /* Única cor não-global mantida */
+  --border-color: var(--color-border);
+  --hover-black: #333333; /* Cor de hover mantida */
+  --error-color: #d32f2f;
+  --success-color: #388e3c;
 }
 
 .footer {
@@ -20,12 +24,8 @@
 }
 
 .footer-container {
-  /* ================================================== */
-  /* CORREÇÃO 2: CORREÇÃO DE ALINHAMENTO VISUAL
-  /* Alterado de 1200px para 1100px para alinhar
-  /* com o .container do seu site (page.module.css).
-  /* ================================================== */
-  max-width: 1100px;
+  /* --- CORREÇÃO DE ALINHAMENTO --- */
+  max-width: 1100px; /* Alinhado com page.module.css (era 1200px) */
   margin: 0 auto;
   width: 100%;
 }
@@ -38,6 +38,7 @@
   margin-bottom: 80px;
   padding-bottom: 60px;
   border-bottom: 1px solid var(--border-color);
+  opacity: 0; /* Preparado para animação */
 }
 
 .footer-brand {
@@ -54,6 +55,7 @@
   letter-spacing: -0.02em;
   transition: color 0.3s ease;
   display: inline-block;
+  cursor: pointer; /* Adicionado para links com onClick */
 }
 
 .footer-logo:hover {
@@ -105,6 +107,10 @@
   margin-bottom: 60px;
   padding-bottom: 60px;
   border-bottom: 1px solid var(--border-color);
+}
+
+.footer-column {
+  opacity: 0; /* Preparado para animação */
 }
 
 .column-title {
@@ -190,6 +196,11 @@
   gap: 1rem;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
 .form-input,
 .form-textarea {
   background: transparent;
@@ -217,6 +228,16 @@
   border-bottom-color: var(--text-black);
 }
 
+/* --- REATORAÇÃO DE VALIDAÇÃO --- */
+/* A lógica de :invalid foi removida.
+   Agora, o .form-error é controlado 100% pelo React (JS) */
+.form-error {
+  font-size: 0.75rem;
+  color: var(--error-color);
+  margin-top: 0.25rem;
+  /* display: block; é o padrão */
+}
+
 .form-textarea {
   resize: vertical;
   min-height: 80px;
@@ -232,16 +253,49 @@
   font-size: 0.75rem;
   font-weight: 400;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   align-self: flex-start;
   margin-top: 1rem;
   line-height: 1;
+  position: relative;
+  min-width: 140px;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
   opacity: 0.9;
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submit-btn.loading {
+  color: transparent; /* Esconde o texto "Enviando..." */
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--bg-gray);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.form-submitted .submit-btn {
+  background-color: var(--success-color);
 }
 
 /* ===== SEÇÃO INFERIOR ===== */
@@ -249,6 +303,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  opacity: 0; /* Preparado para animação */
 }
 
 .footer-nav {
@@ -259,7 +314,7 @@
 }
 
 .nav-link {
-  font-size: 0.6875rem; /* 11px */
+  font-size: 0.6875rem;
   font-weight: 400;
   color: var(--text-gray);
   text-decoration: none;
@@ -274,7 +329,7 @@
 }
 
 .nav-separator {
-  font-size: 0.6875rem; /* 11px */
+  font-size: 0.6875rem;
   color: var(--text-light);
   margin: 0;
 }
@@ -287,7 +342,7 @@
 }
 
 .brand-tagline {
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.875rem;
   font-weight: 400;
   color: var(--text-black);
   margin: 0 0 0.5rem 0;
@@ -295,7 +350,7 @@
 }
 
 .company-info {
-  font-size: 0.6875rem; /* 11px */
+  font-size: 0.6875rem;
   font-weight: 400;
   color: var(--text-light);
   line-height: 1.4;
@@ -304,17 +359,48 @@
 }
 
 .back-to-top {
-  font-size: 0.6875rem; /* 11px */
+  font-size: 0.6875rem;
   font-weight: 400;
   color: var(--text-gray);
   text-decoration: none;
   transition: color 0.3s ease;
   line-height: 1;
   margin-top: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0; /* Reset de botão */
+  text-align: right; /* Alinhamento de botão */
 }
 
 .back-to-top:hover {
   color: var(--text-black);
+}
+
+/* ===== ACESSIBILIDADE ===== */
+@media (prefers-reduced-motion: reduce) {
+  .footer-logo,
+  .contact-link,
+  .social-link,
+  .nav-link,
+  .back-to-top,
+  .project-btn,
+  .submit-btn {
+    transition: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  .footer {
+    --text-gray: #000000;
+    --text-light: #333333;
+    --border-color: #000000;
+  }
 }
 
 /* ===== RESPONSIVIDADE ===== */
@@ -328,7 +414,6 @@
     gap: 60px;
   }
   
-  /* Ajuste para a coluna de formulário ir para baixo */
   .footer-middle .footer-column:last-child {
     grid-column: 1 / -1;
   }
@@ -411,6 +496,6 @@
   }
   
   .nav-separator {
-    display: none; /* Esconde o separador em coluna */
+    display: none;
   }
 }
