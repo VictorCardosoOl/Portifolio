@@ -1,16 +1,19 @@
 /* src/components/Footer.css */
 
 .footer {
-  /* --- REATORAÇÃO DE TEMA --- */
-  /* Substituído por variáveis globais do seu globals.css */
+  /* --- MELHORIA 1: ALINHAMENTO DE TEMA --- */
+  /* Usando as variáveis do seu globals.css */
   --bg-gray: var(--color-background-accent);
   --text-black: var(--color-text-highlight);
   --text-gray: var(--color-text-secondary);
-  --text-light: #999999; /* Única cor não-global mantida */
   --border-color: var(--color-border);
-  --hover-black: #333333; /* Cor de hover mantida */
+  
+  /* Cores locais mantidas */
+  --text-light: #999999;
+  --hover-black: #333333;
   --error-color: #d32f2f;
   --success-color: #388e3c;
+  --container-padding: 40px; /* (Vem do seu código) */
 }
 
 .footer {
@@ -24,8 +27,8 @@
 }
 
 .footer-container {
-  /* --- CORREÇÃO DE ALINHAMENTO --- */
-  max-width: 1100px; /* Alinhado com page.module.css (era 1200px) */
+  /* --- MELHORIA 2: CORREÇÃO DE ALINHAMENTO --- */
+  max-width: 1100px; /* Era 1200px */
   margin: 0 auto;
   width: 100%;
 }
@@ -38,7 +41,7 @@
   margin-bottom: 80px;
   padding-bottom: 60px;
   border-bottom: 1px solid var(--border-color);
-  opacity: 0; /* Preparado para animação */
+  opacity: 0; /* MELHORIA 3: Para animação fade-in */
 }
 
 .footer-brand {
@@ -55,7 +58,7 @@
   letter-spacing: -0.02em;
   transition: color 0.3s ease;
   display: inline-block;
-  cursor: pointer; /* Adicionado para links com onClick */
+  cursor: pointer; /* Adicionado para links/botões */
 }
 
 .footer-logo:hover {
@@ -110,7 +113,7 @@
 }
 
 .footer-column {
-  opacity: 0; /* Preparado para animação */
+  opacity: 0; /* MELHORIA 3: Para animação fade-in */
 }
 
 .column-title {
@@ -228,21 +231,22 @@
   border-bottom-color: var(--text-black);
 }
 
-/* --- REATORAÇÃO DE VALIDAÇÃO --- */
-/* A lógica de :invalid foi removida.
-   Agora, o .form-error é controlado 100% pelo React (JS) */
-.form-error {
-  font-size: 0.75rem;
-  color: var(--error-color);
-  margin-top: 0.25rem;
-  /* display: block; é o padrão */
-}
+/* --- MELHORIA 4: CORREÇÃO DA VALIDAÇÃO (Corrige o erro) --- */
+/* Removemos os seletores CSS :invalid. O React (JS) vai 
+   controlar a exibição do span de erro. */
 
 .form-textarea {
   resize: vertical;
   min-height: 80px;
   margin-top: 0.5rem;
   grid-column: 1 / -1;
+}
+
+.form-error {
+  font-size: 0.75rem;
+  color: var(--error-color);
+  margin-top: 0.25rem;
+  display: block; /* O React vai controlar se o SPAN existe, não o CSS */
 }
 
 .submit-btn {
@@ -273,7 +277,7 @@
 }
 
 .submit-btn.loading {
-  color: transparent; /* Esconde o texto "Enviando..." */
+  color: transparent;
 }
 
 .loading-spinner {
@@ -303,7 +307,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  opacity: 0; /* Preparado para animação */
+  opacity: 0; /* MELHORIA 3: Para animação fade-in */
 }
 
 .footer-nav {
@@ -370,8 +374,8 @@
   border: none;
   cursor: pointer;
   font-family: inherit;
-  padding: 0; /* Reset de botão */
-  text-align: right; /* Alinhamento de botão */
+  padding: 0;
+  text-align: right;
 }
 
 .back-to-top:hover {
@@ -403,7 +407,7 @@
   }
 }
 
-/* ===== RESPONSIVIDADE ===== */
+/* ===== RESPONSIVIDADE (Seu código - mantido) ===== */
 @media (max-width: 1024px) {
   .footer {
     padding: 80px 32px 32px;

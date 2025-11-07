@@ -22,38 +22,30 @@ interface FormErrors {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [formData, setFormData] = useState<FormData>({ /* ... */ });
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    message: ''
+  });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // --- REATORAÇÃO DE FUNCIONALIDADE ---
+  // --- MELHORIA: FUNCIONALIDADE SCROLL ---
   // 3. "Consumir" o contexto para obter a instância do scroll
   const { scroll } = useContext(LocomotiveScrollContext);
 
-  // 4. Scroll suave para o topo (AGORA FUNCIONAL)
-  const scrollToTop = () => {
-    // Usa a instância do Locomotive Scroll vinda do Contexto
-    if (scroll) {
-      scroll.scrollTo('#inicio', {
-        duration: 1200, // Mais suave
-        easing: [0.25, 0.0, 0.35, 1.0],
-      });
-    } else {
-      // Fallback se o scroll não estiver pronto (raro)
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-  
-  // --- REATORAÇÃO DE ANIMAÇÃO ---
-  // 5. Criar refs para os elementos que vamos animar
+  // --- MELHORIA: ANIMAÇÃO ---
+  // 4. Criar refs para os elementos
   const topRef = useRef(null);
   const contactColRef = useRef(null);
   const socialColRef = useRef(null);
   const formColRef = useRef(null);
   const bottomRef = useRef(null);
 
-  // 6. Aplicar a animação (staggered delay)
+  // 5. Aplicar a animação
   useFadeInUp(topRef, 0.1);
   useFadeInUp(contactColRef, 0.2);
   useFadeInUp(socialColRef, 0.3);
@@ -61,8 +53,8 @@ const Footer = () => {
   useFadeInUp(bottomRef, 0.2);
 
   
-  // ... (Suas funções validateForm, handleInputChange, handleSubmit, handleSocialClick - mantidas)
-  // ... (elas estão ótimas!)
+  // --- SEU CÓDIGO DE FORMULÁRIO (CORRIGIDO) ---
+  // (Funções definidas APENAS UMA VEZ)
 
   // Validação do formulário
   const validateForm = (): boolean => {
@@ -79,11 +71,20 @@ const Footer = () => {
   };
 
   // Manipulação de mudanças nos inputs
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
     if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
     }
   };
 
@@ -95,7 +96,7 @@ const Footer = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       console.log('Dados do formulário:', formData);
-      if (typeof window.gtag !== 'undefined') {
+      if (typeof window.gtag !== 'undefined') { // Usar window.gtag
         window.gtag('event', 'form_submit', {
           event_category: 'contact',
           event_label: 'footer_form'
@@ -103,7 +104,9 @@ const Footer = () => {
       }
       setIsSubmitted(true);
       setTimeout(() => {
-        setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+        setFormData({
+          name: '', email: '', phone: '', company: '', message: ''
+        });
         setIsSubmitted(false);
       }, 5000);
     } catch (error) {
@@ -113,9 +116,21 @@ const Footer = () => {
     }
   };
 
+  // 6. Scroll suave para o topo (AGORA FUNCIONAL)
+  const scrollToTop = () => {
+    if (scroll) {
+      scroll.scrollTo('#inicio', {
+        duration: 1200, 
+        easing: [0.25, 0.0, 0.35, 1.0],
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // Tracking de cliques em redes sociais
   const handleSocialClick = (platform: string) => {
-    if (typeof window.gtag !== 'undefined') {
+    if (typeof window.gtag !== 'undefined') { // Usar window.gtag
       window.gtag('event', 'social_click', {
         event_category: 'social',
         event_label: platform
@@ -148,7 +163,6 @@ const Footer = () => {
           </div>
           
           <div className="footer-locations">
-            {/* ... (código dos escritórios mantido) ... */}
             <div className="location">
               <h4 className="location-label">O ESTÚDIO</h4>
               <p className="location-address">
@@ -194,7 +208,7 @@ const Footer = () => {
               onClick={() => {
                 // 8. Usar o scroll suave aqui também
                 if (scroll) {
-                  scroll.scrollTo('#contato');
+                  scroll.scrollTo('#contato'); // ID da sua seção de contato
                 } else {
                   document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -209,7 +223,6 @@ const Footer = () => {
           <div className="footer-column" ref={socialColRef}> {/* 7. Adicionar ref */}
             <h4 className="column-title">CONECTAR</h4>
             <nav className="social-grid" aria-label="Redes sociais">
-              {/* ... (links sociais mantidos) ... */}
               <a href="https://www.linkedin.com/in/victor-card-cunha/" className="social-link" onClick={() => handleSocialClick('linkedin')} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (abre em nova aba)">LinkedIn</a>
               <a href="https://www.instagram.com/hi.chicocdo/" className="social-link" onClick={() => handleSocialClick('instagram')} target="_blank" rel="noopener noreferrer" aria-label="Instagram (abre em nova aba)">Instagram</a>
               <a href="https://dribbble.com/" className="social-link" onClick={() => handleSocialClick('dribbble')} target="_blank" rel="noopener noreferrer" aria-label="Dribbble (abre em nova aba)">Dribbble</a>
@@ -229,12 +242,12 @@ const Footer = () => {
             >
               <div className="form-grid">
                 <div className="form-group">
-                  <input type="text" name="name" placeholder="Seu nome*" className="form-input" value={formData.name} onChange={handleInputChange} required aria-describedby={errors.name ? "name-error" : undefined} />
+                  <input type="text" name="name" placeholder="Seu nome*" className="form-input" value={formData.name} onChange={handleInputChange} required aria-invalid={!!errors.name} aria-describedby="name-error" />
                   {errors.name && (<span id="name-error" className="form-error" role="alert">{errors.name}</span>)}
                 </div>
                 
                 <div className="form-group">
-                  <input type="email" name="email" placeholder="Seu e-mail*" className="form-input" value={formData.email} onChange={handleInputChange} required aria-describedby={errors.email ? "email-error" : undefined} />
+                  <input type="email" name="email" placeholder="Seu e-mail*" className="form-input" value={formData.email} onChange={handleInputChange} required aria-invalid={!!errors.email} aria-describedby="email-error" />
                   {errors.email && (<span id="email-error" className="form-error" role="alert">{errors.email}</span>)}
                 </div>
                 
@@ -248,7 +261,7 @@ const Footer = () => {
               </div>
               
               <div className="form-group">
-                <textarea name="message" placeholder="Mensagem*" className="form-textarea" rows={3} value={formData.message} onChange={handleInputChange} required aria-describedby={errors.message ? "message-error" : undefined}></textarea>
+                <textarea name="message" placeholder="Mensagem*" className="form-textarea" rows={3} value={formData.message} onChange={handleInputChange} required aria-invalid={!!errors.message} aria-describedby="message-error"></textarea>
                 {errors.message && (<span id="message-error" className="form-error" role="alert">{errors.message}</span>)}
               </div>
               
@@ -279,7 +292,6 @@ const Footer = () => {
             className="footer-nav" 
             aria-label="Navegação secundária"
           >
-            {/* ... (links de navegação mantidos) ... */}
             <a href="#politica" className="nav-link">POLÍTICA DE PRIVACIDADE</a>
             <span className="nav-separator" aria-hidden="true">/</span>
             <a href="#cookies" className="nav-link">COOKIES</a>
