@@ -166,18 +166,18 @@ const Footer = () => {
             <div className="location">
               <h4 className="location-label">O ESTÚDIO</h4>
               <p className="location-address">
-                Quereo Park Villa, 30 West Drive<br />
-                Brighton, BV2 QQJ
+                Vila Formosa, São Paulo<br />
+                Brasil
               </p>
-              <p className="location-name">Estúdio Brighton</p>
+              <p className="location-name">Estúdio Formosa</p>
             </div>
             <div className="location">
-              <h4 className="location-label">ESCRITÓRIO DE LONDRES</h4>
+              <h4 className="location-label">ESCRITÓRIO</h4>
               <p className="location-address">
-                14 Florham Gardens, Lower Richmond Road<br />
-                Richmond, TW9 4LJ
+                Tatuapé, São Paulo<br />
+                Brasil
               </p>
-              <p className="location-name">Escritório de Londres</p>
+              <p className="location-name">Escritório do Tatuapé</p>
             </div>
           </div>
         </div>
