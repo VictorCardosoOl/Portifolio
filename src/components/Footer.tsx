@@ -306,7 +306,7 @@ const Footer = () => {
           <div className="footer-copyright">
             <p className="brand-tagline">Brand Artistry.</p>
             <p className="company-info">
-              Victor Cunha Limited número de registro 12345678<br />
+             Todos os direitos reservados<br />
               © 2015 - {currentYear} Victor Cunha.
             </p>
             <button 

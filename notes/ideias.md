@@ -30,3 +30,9 @@ https://cristianaaraujo.com/
 
 ----------------------------------------------------------------------------------
 No footer fazer ligação com a agencia de desenvolvimento que faço parte 
+
+Em:
+<a href="#trabalhar" className="nav-link">TRABALHAR</a>
+<a href="#servicos" className="nav-link">SERVIÇOS</a>
+
+Depois no footer devo colocar um popup em ambas os links para que de toda forma seja possivel me contactar 
