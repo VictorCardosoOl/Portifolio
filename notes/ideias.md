@@ -36,3 +36,7 @@ Em:
 <a href="#servicos" className="nav-link">SERVIÇOS</a>
 
 Depois no footer devo colocar um popup em ambas os links para que de toda forma seja possivel me contactar 
+
+------------------------------------------------------------------------------
+
+Gerar Qr Codes do meu portifolio e disponibilizar no meu curriculo.
