@@ -10,10 +10,12 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// 1. Modificamos o hook para aceitar um 'setIsReady'
+// 1. Modificamos o hook para aceitar 'setScroll'
 const useLocomotiveScroll = (
   containerRef: React.RefObject<HTMLDivElement>,
-  setIsReady: (isReady: boolean) => void // Adiciona esta linha
+  setIsReady: (isReady: boolean) => void,
+  // Adiciona esta linha para receber a função do estado do layout
+  setScroll: (scrollInstance: any | null) => void 
 ) => {
   useEffect(() => {
     if (!containerRef.current) return;
@@ -31,7 +33,7 @@ const useLocomotiveScroll = (
         },
       });
 
-      // --- Integração GSAP ScrollTrigger ---
+      // --- Integração GSAP ScrollTrigger (Esta é a parte crucial!) ---
       scroll.on('scroll', ScrollTrigger.update);
 
       ScrollTrigger.scrollerProxy(containerRef.current, {
@@ -62,13 +64,20 @@ const useLocomotiveScroll = (
       ScrollTrigger.refresh();
 
       // --- 2. AVISO DE PRONTO ---
-      // Diz ao layout que tudo está carregado e pronto
+      
+      // 2a. Atualiza o estado global no layout com a instância do scroll
+      setScroll(scroll); 
+      // 2b. Diz ao layout que tudo está carregado e pronto
       setIsReady(true); 
 
       // --- Limpeza ---
       return () => {
         console.log("Destroying Locomotive Scroll and ScrollTriggers");
-        setIsReady(false); // 3. Avisa que não está pronto ao desmontar
+        
+        // 3. Limpa o estado global ao desmontar
+        setScroll(null); 
+        setIsReady(false); 
+
         if (scroll) scroll.destroy();
         resizeObserver.disconnect();
          ScrollTrigger.removeEventListener("refresh", () => scroll?.update());
@@ -76,7 +85,7 @@ const useLocomotiveScroll = (
       };
     }).catch(error => {
         console.error("Failed to load Locomotive Scroll:", error);
-        setIsReady(true); // Mesmo se falhar, tentamos mostrar o site
+        setIsReady(true); 
     });
 
     return () => {
@@ -84,13 +93,16 @@ const useLocomotiveScroll = (
         scroll.destroy();
         console.log("Destroying Locomotive Scroll (early unmount)");
       }
+      // 3. Limpa o estado global em caso de unmount precoce
+      setScroll(null);
       setIsReady(false);
       ScrollTrigger.removeEventListener("refresh", () => scroll?.update());
       if (containerRef.current) {
           ScrollTrigger.scrollerProxy(containerRef.current, undefined);
       }
     };
-  }, [containerRef, setIsReady]); // Adiciona setIsReady às dependências
+  // 4. Adiciona setScroll às dependências do useEffect
+  }, [containerRef, setIsReady, setScroll]); 
 };
 
 export default useLocomotiveScroll;
