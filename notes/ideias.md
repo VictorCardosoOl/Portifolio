@@ -40,3 +40,5 @@ Depois no footer devo colocar um popup em ambas os links para que de toda forma 
 ------------------------------------------------------------------------------
 
 Gerar Qr Codes do meu portifolio e disponibilizar no meu curriculo.
+
+tratar o formulario de contato 
