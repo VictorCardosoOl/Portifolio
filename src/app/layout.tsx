@@ -1,16 +1,19 @@
 // src/app/layout.tsx
 "use client"; 
 
-// 1. Importar hooks do React
-import { useRef, useState, useEffect } from 'react';
+// 1. Importar hooks do React (NÃO precisamos do useEffect aqui)
+import { useRef, useState } from 'react';
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
 
-// 2. Importar o CSS do Locomotive e o nosso novo Contexto
+// 2. Importar o CSS do Locomotive e o nosso Contexto
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { LocomotiveScrollContext } from '@/contexts/LocomotiveScrollContext';
+
+// 3. !! IMPORTANTE: Importar o NOSSO hook !!
+import useLocomotiveScroll from '@/hooks/useLocomotiveScroll';
 
 // (Seus menuItems e socialItems - mantidos)
 const menuItems = [
@@ -35,56 +38,15 @@ export default function RootLayout({
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
   
-  // 3. Estado para guardar a instância do scroll
   const [scroll, setScroll] = useState<any | null>(null);
 
-  // 4. Vamos gerir o 'useEffect' aqui
-  useEffect(() => {
-    let locomotiveScroll: any | null = null;
-    let resizeObserver: ResizeObserver | null = null;
-
-    // 5. CORREÇÃO: Usar importação dinâmica (só no cliente)
-    import('locomotive-scroll').then((LocomotiveScroll) => {
-      if (mainContainerRef.current) {
-        locomotiveScroll = new LocomotiveScroll.default({
-          el: mainContainerRef.current,
-          smooth: true,
-          multiplier: 1,
-          class: 'is-reveal',
-        });
-        
-        // 6. Guarda a instância no estado para partilhar no Contexto
-        setScroll(locomotiveScroll);
-        setIsReady(true); // Site pronto!
-
-        // 7. Observer robusto para atualizar o scroll
-        resizeObserver = new ResizeObserver(() => {
-          locomotiveScroll?.update();
-        });
-        resizeObserver.observe(mainContainerRef.current);
-      }
-    }).catch(error => {
-      console.error("Erro ao carregar Locomotive Scroll:", error);
-      setIsReady(true);
-    });
-
-    // 8. Limpeza
-    return () => {
-      if (locomotiveScroll) {
-        locomotiveScroll.destroy();
-      }
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      }
-      setScroll(null);
-      setIsReady(false);
-    };
-  }, []); // Executa apenas uma vez
+  // 4. !! AQUI ESTÁ A VERSÃO CORRETA !!
+  // Nós apenas CHAMAMOS o hook.
+  useLocomotiveScroll(mainContainerRef, setIsReady, setScroll);
 
   return (
     <html lang="pt-BR"> 
       <body>
-        {/* 9. "Fornece" a instância do scroll para todos os componentes filhos */}
         <LocomotiveScrollContext.Provider value={{ scroll }}>
           <StaggeredMenu
             isFixed={true} 
@@ -108,7 +70,7 @@ export default function RootLayout({
           >
             {isReady && children}
             
-            {/* O Footer agora está dentro do Provider */}
+            {/* O Footer está no sítio certo (dentro do main) */}
             {isReady && <Footer />}
             
           </main> 
