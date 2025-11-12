@@ -1,9 +1,17 @@
 // src/components/Footer.tsx
-import React, { useState, useContext, useRef } from 'react'; // 1. Importar useContext e useRef
+
+// 1. Importar 'useEffect' (você já o tem, mas agora também importamos 'gsap' e 'ScrollTrigger')
+import React, { useState, useContext, useRef, useEffect } from 'react'; // 1. Importar useContext e useRef
 import './Footer.css';
 // 2. Importar o Contexto de Scroll e o Hook de Animação
 import { LocomotiveScrollContext } from '@/contexts/LocomotiveScrollContext';
 import { useFadeInUp } from '@/hooks/useFadeInUp';
+
+// 3. !! ALTERAÇÃO IMPORTANTE !!
+// Temos de importar o ScrollTrigger para poder "refrescá-lo"
+import { gsap } from 'gsap'; // Embora o hook já o use, é boa prática tê-lo
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 
 // ... (Interface FormData e FormErrors - mantidas)
 interface FormData {
@@ -34,18 +42,18 @@ const Footer = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // --- MELHORIA: FUNCIONALIDADE SCROLL ---
-  // 3. "Consumir" o contexto para obter a instância do scroll
+  // "Consumir" o contexto para obter a instância do scroll
   const { scroll } = useContext(LocomotiveScrollContext);
 
   // --- MELHORIA: ANIMAÇÃO ---
-  // 4. Criar refs para os elementos
+  // Criar refs para os elementos
   const topRef = useRef(null);
   const contactColRef = useRef(null);
   const socialColRef = useRef(null);
   const formColRef = useRef(null);
   const bottomRef = useRef(null);
 
-  // 5. Aplicar a animação
+  // Aplicar a animação (Isto está CORRETO)
   useFadeInUp(topRef, 0.1);
   useFadeInUp(contactColRef, 0.2);
   useFadeInUp(socialColRef, 0.3);
@@ -53,8 +61,28 @@ const Footer = () => {
   useFadeInUp(bottomRef, 0.2);
 
   
+  // 4. !! AQUI ESTÁ A CORREÇÃO FINAL !!
+  // Este useEffect agora corrige o 'locomotive-scroll' E o 'ScrollTrigger'
+  useEffect(() => {
+    if (scroll) {
+      
+      const timer = setTimeout(() => {
+        // 1. Diz ao Locomotive para recalcular a altura (o que já tínhamos)
+        scroll.update(); 
+        
+        // 2. Diz ao GSAP para recalcular TODOS os 'triggers' na página
+        ScrollTrigger.refresh(); 
+        
+      }, 500); // 500ms de margem de segurança
+
+      return () => clearTimeout(timer);
+    }
+  }, [scroll]); // Depende do 'scroll' estar pronto
+
+
+  
   // --- SEU CÓDIGO DE FORMULÁRIO (CORRIGIDO) ---
-  // (Funções definidas APENAS UMA VEZ)
+  // (O resto do seu código permanece 100% igual)
 
   // Validação do formulário
   const validateForm = (): boolean => {
