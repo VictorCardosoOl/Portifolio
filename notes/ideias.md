@@ -42,3 +42,5 @@ Depois no footer devo colocar um popup em ambas os links para que de toda forma 
 Gerar Qr Codes do meu portifolio e disponibilizar no meu curriculo.
 
 tratar o formulario de contato 
+
+Chat pensando nisso eu gostaria de saber se no meu porjeto, há possibilidade de incluir uma guia tipo adm, exemplo https:portifolio.com.br/adm, onde eu pudesse acessar e verificar a qauntidade de acessos que o site teve, os dados que foram preencidos no formularo, onde mais ou menos cada usuario demorou mais tempo navegando, quanto tempo o site passou aberto e etec, sem fazer um backend completo ou complexo?
