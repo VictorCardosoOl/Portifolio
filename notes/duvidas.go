@@ -1,0 +1,1 @@
+Seria interessante verificar o uso do hooks  usestate e identificar se ele faz sentido nesse projeto

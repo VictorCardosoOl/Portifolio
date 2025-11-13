@@ -1,0 +1,119 @@
+/* Estilos gerais para a secção de projetos */
+.projectsSection {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.5rem; /* 40px */
+  font-weight: 700; /* Bold */
+  margin-bottom: 3rem; /* 48px */
+  text-align: left;
+  color: var(--color-text-primary); /* Certifique-se que esta variável existe no seu globals.css */
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: 1fr; /* Uma coluna por defeito (mobile) */
+  gap: 2.5rem; /* 40px */
+}
+
+/* Media query para ecrãs maiores (ex: tablets e desktops) */
+@media (min-width: 768px) {
+  .projectsGrid {
+    grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+  }
+}
+
+.projectCard {
+  background-color: var(--color-background-secondary); /* Use as suas variáveis globais */
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--color-border); /* Use as suas variáveis globais */
+}
+
+.projectCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* Proporção 16:9 */
+  background-color: #333; /* Um placeholder enquanto a imagem carrega */
+}
+
+.projectImage {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.projectInfo {
+  padding: 1.5rem; /* 24px */
+}
+
+.projectTitle {
+  font-size: 1.5rem; /* 24px */
+  font-weight: 600; /* Medium/Semibold */
+  margin-bottom: 0.75rem; /* 12px */
+}
+
+.projectDescription {
+  font-size: 1rem; /* 16px */
+  color: var(--color-text-secondary); /* Use as suas variáveis globais */
+  margin-bottom: 1.25rem; /* 20px */
+  line-height: 1.6;
+}
+
+.projectTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem; /* 8px */
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem; /* 24px */
+}
+
+.projectTags li {
+  font-size: 0.875rem; /* 14px */
+  background-color: var(--color-tag-background); /* Use as suas variáveis globais */
+  color: var(--color-tag-text); /* Use as suas variáveis globais */
+  padding: 0.25rem 0.75rem; /* 4px 12px */
+  border-radius: 999px; /* "Pill shape" */
+}
+
+.projectLinks {
+  display: flex;
+  gap: 1.5rem; /* 24px */
+  align-items: center;
+}
+
+/* Esta é a classe que adicionámos! */
+.projectLink {
+  font-size: 1rem; /* 16px */
+  font-weight: 500; /* Medium */
+  color: var(--color-text-primary);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 4px;
+}
+
+/* Efeito "underline" subtil no hover */
+.projectLink::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-text-primary);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+}
+
+.projectLink:hover::after {
+  transform: scaleX(1);
+}
