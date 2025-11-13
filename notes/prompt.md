@@ -14,6 +14,14 @@ Aderência a princípios SOLID, DRY, KISS e Clean Code
 Avalie documentação, testes automatizados, CI/CD e segurança.
 Identifique potenciais gargalos de performance ou riscos técnicos.
 
+Com base na analise do repositorio me ajude a realizar a seguinte tarefa:
+
+Problema: O projeto usa animações pesadas (GSAP, Framer Motion) mas não parece respeitar a preferência de "Movimento Reduzido" (prefers-reduced-motion) do utilizador.
+
+Impacto: Pode causar desconforto físico (náusea, tontura) a utilizadores com distúrbios vestibulares.
+
+Recomendação: Criar um hook usePrefersReducedMotion e usá-lo para desativar ou simplificar animações (ex: trocar useFadeInUp por um fade simples) se a preferência estiver ativa.
+
 Recomendações:
 
 Liste melhorias práticas (técnicas e organizacionais).
