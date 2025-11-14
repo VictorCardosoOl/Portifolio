@@ -1,20 +1,21 @@
 // src/app/layout.tsx
 "use client"; 
 
-// 1. Importar hooks do React
-import { useRef, useState, useEffect } from 'react';
+// 1. Importar hooks do React (REMOVEMOS O 'useEffect' DAQUI)
+import { useRef, useState } from 'react';
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
 
-// 2. Importar o CSS do Locomotive e o nosso novo Contexto
+// 2. Importar o CSS e o Contexto
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { LocomotiveScrollContext } from '@/contexts/LocomotiveScrollContext';
 
+// 3. IMPORTAR O HOOK CORRETO (QUE TEM O GSAP)
 import useLocomotiveScroll from '@/hooks/useLocomotiveScroll';
 
-// (Seus menuItems e socialItems - mantidos)
+// (Os teus menuItems e socialItems - mantidos)
 const menuItems = [
   { label: "Início", ariaLabel: "Ir para o início", link: "/#inicio" },
   { label: "Sobre", ariaLabel: "Ir para sobre mim", link: "/#sobre" },
@@ -32,7 +33,7 @@ const socialItems = [
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.Node;
 }>) {
   const mainContainerRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
@@ -40,53 +41,17 @@ export default function RootLayout({
   // 3. Estado para guardar a instância do scroll
   const [scroll, setScroll] = useState<any | null>(null);
 
-  // 4. Vamos gerir o 'useEffect' aqui
-  useEffect(() => {
-    let locomotiveScroll: any | null = null;
-    let resizeObserver: ResizeObserver | null = null;
+  // 4. O 'useEffect' (linhas 33-83 do teu ficheiro antigo) FOI REMOVIDO!
+  // Esta era a Lógica 1 (conflituosa).
 
-    // 5. CORREÇÃO: Usar importação dinâmica (só no cliente)
-    import('locomotive-scroll').then((LocomotiveScroll) => {
-      if (mainContainerRef.current) {
-        locomotiveScroll = new LocomotiveScroll.default({
-          el: mainContainerRef.current,
-          smooth: true,
-          multiplier: 1,
-          class: 'is-reveal',
-        });
-        
-        // 6. Guarda a instância no estado para partilhar no Contexto
-        setScroll(locomotiveScroll);
-        setIsReady(true); // Site pronto!
-
-        // 7. Observer robusto para atualizar o scroll
-        resizeObserver = new ResizeObserver(() => {
-          locomotiveScroll?.update();
-        });
-        resizeObserver.observe(mainContainerRef.current);
-      }
-    }).catch(error => {
-      console.error("Erro ao carregar Locomotive Scroll:", error);
-      setIsReady(true);
-    });
-
-    // 8. Limpeza
-    return () => {
-      if (locomotiveScroll) {
-        locomotiveScroll.destroy();
-      }
-      if (resizeObserver) {
-        resizeObserver.disconnect();
-      }
-      setScroll(null);
-      setIsReady(false);
-    };
-  }, []); // Executa apenas uma vez
+  // 5. CHAMAR A LÓGICA 2 (O HOOK CORRETO)
+  // Agora o layout DELEGA a criação do scroll para o hook.
+  useLocomotiveScroll(mainContainerRef, setIsReady, setScroll);
 
   return (
     <html lang="pt-BR"> 
       <body>
-        {/* 9. "Fornece" a instância do scroll para todos os componentes filhos */}
+        {/* 6. O Provider agora recebe a instância de scroll vinda do HOOK (com GSAP) */}
         <LocomotiveScrollContext.Provider value={{ scroll }}>
           <StaggeredMenu
             isFixed={true} 
