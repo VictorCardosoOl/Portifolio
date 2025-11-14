@@ -59,8 +59,9 @@ const useLocomotiveScroll = (
         }
       });
       resizeObserver.observe(containerRef.current);
-      
-      useLocomotiveScroll(mainContainerRef, setIsReady, setScroll);
+
+      // !! A LINHA 63 QUE CAUSA O ERRO FOI REMOVIDA DAQUI !!
+      // (Não deve haver nenhuma chamada a 'useLocomotiveScroll' aqui dentro)
 
       ScrollTrigger.defaults({ scroller: containerRef.current });
       ScrollTrigger.refresh();
