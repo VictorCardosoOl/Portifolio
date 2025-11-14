@@ -59,6 +59,8 @@ const useLocomotiveScroll = (
         }
       });
       resizeObserver.observe(containerRef.current);
+      
+      useLocomotiveScroll(mainContainerRef, setIsReady, setScroll);
 
       ScrollTrigger.defaults({ scroller: containerRef.current });
       ScrollTrigger.refresh();

@@ -12,6 +12,8 @@ import Footer from "@/components/Footer";
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { LocomotiveScrollContext } from '@/contexts/LocomotiveScrollContext';
 
+import useLocomotiveScroll from '@/hooks/useLocomotiveScroll';
+
 // (Seus menuItems e socialItems - mantidos)
 const menuItems = [
   { label: "Início", ariaLabel: "Ir para o início", link: "/#inicio" },
