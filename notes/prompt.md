@@ -1,4 +1,6 @@
-Prompt: Análise de Repositório e Documento (Desenvolvedor Sênior)
+https://github.com/VictorCardosoOl/Portifolio
+
+Análise de Repositório e Documento (Desenvolvedor Sênior)
 
 Instrução principal:
 Você é um desenvolvedor sênior especializado em arquitetura de software, clean code e boas práticas de engenharia de software.
@@ -16,11 +18,7 @@ Identifique potenciais gargalos de performance ou riscos técnicos.
 
 Com base na analise do repositorio me ajude a realizar a seguinte tarefa:
 
-Problema: O projeto usa animações pesadas (GSAP, Framer Motion) mas não parece respeitar a preferência de "Movimento Reduzido" (prefers-reduced-motion) do utilizador.
-
-Impacto: Pode causar desconforto físico (náusea, tontura) a utilizadores com distúrbios vestibulares.
-
-Recomendação: Criar um hook usePrefersReducedMotion e usá-lo para desativar ou simplificar animações (ex: trocar useFadeInUp por um fade simples) se a preferência estiver ativa.
+Aplicação do locmotivescroll pra suavisar o ato de rolar e verificar os erros abaixo que aparecem em meu consle
 
 Recomendações:
 
