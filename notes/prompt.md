@@ -18,7 +18,14 @@ Identifique potenciais gargalos de performance ou riscos técnicos.
 
 Com base na analise do repositorio me ajude a realizar a seguinte tarefa:
 
-Chat desejo trabalhar o Locomotivscroll, atualmente eu não acho que ele esteja suave e bonito o suficnete, desejo que ele seja mais elegante. 
+
+Menu (staggeredMenu): Ele não está conseguindo localizar as seções do site e está retornando a mensagem de que não há itens. Quero que você identifique e corrija o problema para que o menu reconheça corretamente todas as seções.
+
+Efeito magnético: No arquivo contactSection.tsx existe a função useMagneticButton(contactButtonRef, 0.4). Eu gostaria que esse efeito magnético fosse totalmente removido, pois não quero utilizá-lo.
+
+Botões do footer: Quero que os botões do meu footer sigam o mesmo padrão visual e funcional dos demais botões utilizados no site.
+
+Por favor, reestruture os arquivos necessários e implemente as correções adequadas para resolver esses três pontos.
 
 Recomendações:
 

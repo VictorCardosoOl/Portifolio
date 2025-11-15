@@ -12,6 +12,10 @@ import { useFadeInUp } from '@/hooks/useFadeInUp';
 import { gsap } from 'gsap'; // Embora o hook já o use, é boa prática tê-lo
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// !! NOVA IMPORTAÇÃO !!
+// Importa os estilos globais de 'page.module.css' para usar as classes .btn
+import styles from '@/app/page.module.css';
+
 
 // ... (Interface FormData e FormErrors - mantidas)
 interface FormData {
@@ -232,7 +236,8 @@ const Footer = () => {
               </a>
             </div>
             <button 
-              className="project-btn"
+              // !! CLASSE ALTERADA !! (usa 'styles.btn' e 'styles.btnSecondary')
+              className={`${styles.btn} ${styles.btnSecondary}`}
               onClick={() => {
                 // 8. Usar o scroll suave aqui também
                 if (scroll) {
@@ -295,13 +300,15 @@ const Footer = () => {
               
               <button 
                 type="submit" 
-                className={`submit-btn ${isSubmitting ? 'loading' : ''}`}
+                // !! CLASSE ALTERADA !! (usa 'styles.btn', 'styles.btnPrimary' e mantém a classe 'loading')
+                className={`${styles.btn} ${styles.btnPrimary} ${isSubmitting ? 'loading' : ''}`}
                 disabled={isSubmitting || isSubmitted}
                 aria-live="polite"
               >
                 {isSubmitting ? (
                   <>
                     <span aria-hidden="true">Enviando...</span>
+                    {/* A classe 'loading-spinner' do Footer.css ainda vai funcionar */}
                     <div className="loading-spinner" aria-hidden="true"></div>
                   </>
                 ) : isSubmitted ? (

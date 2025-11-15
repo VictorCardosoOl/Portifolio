@@ -147,7 +147,7 @@
   color: var(--text-black);
 }
 
-.project-btn {
+/*.project-btn {
   background: transparent;
   border: 1px solid var(--text-black);
   color: var(--text-black);
@@ -164,7 +164,7 @@
 .project-btn:hover {
   background: var(--text-black);
   color: var(--bg-gray);
-}
+}*/
 
 /* Coluna Social */
 .social-grid {

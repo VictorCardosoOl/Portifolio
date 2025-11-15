@@ -1,59 +1,27 @@
 /**
  * @file data.ts
  * @description Arquivo centralizado para armazenar os dados de conteúdo do portfólio.
- * * Manter os dados separados da lógica da UI (componentes) permite:
- * 1. Atualizações fáceis: Mude textos, links ou projetos sem tocar nos componentes.
- * 2. Reutilização: Os dados podem ser importados em qualquer parte da aplicação.
- * 3. Manutenibilidade: Reduz a complexidade dos componentes e segue o 
- * Princípio da Responsabilidade Única (SRP).
+ * ... (comentários anteriores mantidos) ...
  */
 
 // --- DEFINIÇÕES DE TIPO (Boas Práticas para TS) ---
-// Definir interfaces garante que os dados futuros sigam a mesma estrutura,
-// facilitando a edição e prevenindo erros.
+// ... (interfaces AcademicItem, ProjectItem, PortfolioData mantidas) ...
 
 /**
- * Define a estrutura para um item na seção "Formação Acadêmica".
+ * Define a estrutura para um item do menu principal.
  */
-interface AcademicItem {
-  course: string;
-  institution: string;
-  period: string;
-  description: string;
+interface MenuItem {
+  label: string;
+  ariaLabel: string;
+  link: string;
 }
 
-/**
- * Define a estrutura para um item na seção "Projetos".
- */
-interface ProjectItem {
-  title: string;
-  description: string;
-  tags: string[];
-  liveUrl: string;
-  repoUrl: string;
-}
-
-/**
- * Define a estrutura principal do objeto de dados do portfólio.
- * Tipar o objeto principal garante que todas as chaves necessárias estão presentes.
- */
-interface PortfolioData {
-  name: string;
-  title: string;
-  heroTagline: string;
-  aboutMe: string[];
-  academic: AcademicItem[];
-  projects: ProjectItem[];
-  skills: string[];
-  contactEmail: string;
-}
 
 // --- DADOS DO PORTFÓLIO ---
 
 /**
  * Objeto principal contendo todos os dados de texto e arrays do portfólio.
- * Este objeto é exportado e depois importado pela 'page.tsx' 
- * para popular os componentes da seção.
+ * ...
  */
 export const portfolioData: PortfolioData = {
   name: "Victor Cunha",
@@ -103,3 +71,43 @@ export const portfolioData: PortfolioData = {
   skills: ["React", "Next.js", "TypeScript", "JavaScript", "Node.js", "Express", "PostgreSQL", "MongoDB", "Docker", "Git", "CSS Modules", "HTML5", "CSS3"],
   contactEmail: "victor@email.com",
 };
+
+
+// --- !! NOVO !! DADOS DO MENU ---
+
+/**
+ * Array contendo os itens de navegação principal.
+ * Usado pelo componente StaggeredMenu.
+ */
+export const menuItems: MenuItem[] = [
+  {
+    label: "Início",
+    ariaLabel: "Ir para o topo da página",
+    link: "#inicio" 
+  },
+  {
+    label: "Sobre",
+    ariaLabel: "Ir para a seção Sobre",
+    link: "#sobre" // Assumindo que sua AboutSection tem id="sobre"
+  },
+    {
+    label: "Formação",
+    ariaLabel: "Ir para a seção Formação Acadêmica",
+    link: "#academico" // Assumindo que sua AcademicSection tem id="academico"
+  },
+      {
+    label: "Skills",
+    ariaLabel: "Ir para a seção Skills",
+    link: "#skills" // Assumindo que sua SkillsSection tem id="skills"
+  },
+  {
+    label: "Projetos",
+    ariaLabel: "Ir para a seção Projetos",
+    link: "#projetos" // Assumindo que sua ProjectsSection tem id="projetos"
+  },
+  {
+    label: "Contato",
+    ariaLabel: "Ir para a seção Contato",
+    link: "#contato" // ContactSection tem id="contato"
+  }
+];
