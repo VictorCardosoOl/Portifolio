@@ -27,6 +27,7 @@ https://www.poison.studio/
 https://oversour.studio/
 https://www.oroya.fr/
 https://cristianaaraujo.com/
+https://amritpalace.com/
 
 ----------------------------------------------------------------------------------
 No footer fazer ligação com a agencia de desenvolvimento que faço parte 

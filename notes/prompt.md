@@ -18,7 +18,7 @@ Identifique potenciais gargalos de performance ou riscos técnicos.
 
 Com base na analise do repositorio me ajude a realizar a seguinte tarefa:
 
-Ao realizar o ato de rolar o site, o scroll não esta sendo sendo suavisado pelo locomotivescroll, por gentileza verifique o porque
+Chat desejo trabalhar o Locomotivscroll, atualmente eu não acho que ele esteja suave e bonito o suficnete, desejo que ele seja mais elegante. 
 
 Recomendações:
 
