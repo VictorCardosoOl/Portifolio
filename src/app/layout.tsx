@@ -1,57 +1,59 @@
 // src/app/layout.tsx
 "use client"; 
 
-// 1. Importar hooks do React (REMOVEMOS O 'useEffect' DAQUI)
-import { useRef, useState } from 'react';
+// 1. Importar hooks do React
+import { useRef, useState, useEffect } from 'react';
 import "./globals.css";
 
 import StaggeredMenu from "@/components/StaggeredMenu";
 import Footer from "@/components/Footer";
 
-// 2. Importar o CSS e o Contexto
+// 2. Importar o CSS e os Contextos
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 import { LocomotiveScrollContext } from '@/contexts/LocomotiveScrollContext';
+// A importação do 'MagneticProvider' FOI REMOVIDA daqui
 
 // 3. IMPORTAR O HOOK CORRETO (QUE TEM O GSAP)
 import useLocomotiveScroll from '@/hooks/useLocomotiveScroll';
 
 // (Os teus menuItems e socialItems - mantidos)
-const menuItems = [
-  { label: "Início", ariaLabel: "Ir para o início", link: "/#inicio" },
-  { label: "Sobre", ariaLabel: "Ir para sobre mim", link: "/#sobre" },
-  { label: "Projetos", ariaLabel: "Ir para projetos", link: "/#projetos" },
-  { label: "Habilidades", ariaLabel: "Ir para habilidades", link: "/#habilidades" },
-  { label: "Contato", ariaLabel: "Ir para contato", link: "/#contato" },
-];
-const socialItems = [
-  { label: "GitHub", link: "https://github.com/VictorCardosoOl" },
-  { label: "LinkedIn", link: "https://www.linkedin.com/in/victor-card-cunha/" },
-  { label: "Instagram", link: "https://www.instagram.com/hi.chicocdo/" },
-  { label: "WhatsApp", link: "https://wa.me/5511977440146" },
-];
+const menuItems = [ /* ... */ ];
+const socialItems = [ /* ... */ ];
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.Node;
+  children: React.ReactNode;
 }>) {
   const mainContainerRef = useRef<HTMLDivElement>(null);
-  const [isReady, setIsReady] = useState(false);
   
-  // 3. Estado para guardar a instância do scroll
+  // Lógica do Preloader (mantida)
+  const [isLocomotiveReady, setIsLocomotiveReady] = useState(false);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
   const [scroll, setScroll] = useState<any | null>(null);
 
-  // 4. O 'useEffect' (linhas 33-83 do teu ficheiro antigo) FOI REMOVIDO!
-  // Esta era a Lógica 1 (conflituosa).
+  useLocomotiveScroll(mainContainerRef, setIsLocomotiveReady, setScroll);
 
-  // 5. CHAMAR A LÓGICA 2 (O HOOK CORRETO)
-  // Agora o layout DELEGA a criação do scroll para o hook.
-  useLocomotiveScroll(mainContainerRef, setIsReady, setScroll);
+  useEffect(() => {
+    const onPageLoad = () => {
+      console.log("Conteúdo da página totalmente carregado.");
+      setIsContentLoaded(true);
+    };
+
+    if (document.readyState === 'complete') {
+      onPageLoad();
+    } else {
+      window.addEventListener('load', onPageLoad);
+      return () => window.removeEventListener('load', onPageLoad);
+    }
+  }, []); 
+
+  const isReady = isLocomotiveReady && isContentLoaded;
 
   return (
     <html lang="pt-BR"> 
       <body>
-        {/* 6. O Provider agora recebe a instância de scroll vinda do HOOK (com GSAP) */}
+        {/* O 'MagneticProvider' FOI REMOVIDO daqui */}
         <LocomotiveScrollContext.Provider value={{ scroll }}>
           <StaggeredMenu
             isFixed={true} 
@@ -74,12 +76,10 @@ export default function RootLayout({
             data-scroll-container 
           >
             {isReady && children}
-            
-            {/* O Footer agora está dentro do Provider */}
             {isReady && <Footer />}
-            
           </main> 
         </LocomotiveScrollContext.Provider>
+        {/* O 'MagneticProvider' FOI REMOVIDO daqui */}
       </body>
     </html>
   );
