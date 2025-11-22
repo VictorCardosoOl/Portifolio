@@ -1,77 +1,94 @@
 // src/components/sections/HeroSection.tsx
+"use client";
+
 import React from 'react';
-import Image from 'next/image'; // Usando Next/Image para melhor performance
+import Image from 'next/image';
 import styles from './HeroSection.module.css';
 
-// Usamos uma imagem placeholder do seu repositório.
-const PROFILE_IMAGE_SRC = '/img/Phone Link/profile.jpg';
+const profileData = {
+    title: "PORTFOLIO",
+    contactItems: [
+        "BE: /hannnb",
+        "IG: @han.nnb",
+        "LI: /han-nnb"
+    ],
+    imageText: "i love design and anything related to art. i approach problems in a rational and pragmatic way and seek the simplest and most functional solutions possible."
+}
 
 const HeroSection: React.FC = () => {
   return (
-    // O Hero ocupa toda a largura e tem um padding vertical generoso.
-    <section className={styles.heroContainer}>
-
-      {/* Hero Principal: Layout de Duas Colunas */}
-      <div className={styles.heroMain}>
-        
-        {/* Coluna 1: Conteúdo da Imagem (Esquerda) */}
-        <div className={styles.columnLeft}>
-          
-          {/* Elementos decorativos no topo */}
-          <div className={styles.decorativeElements}>
-            <div className={styles.decorativeShape}></div>
-            <div className={styles.decorativeShape}></div>
-          </div>
-
-          {/* Container da Imagem com o overlay (usaremos ::before para o overlay) */}
-          <div className={styles.imageWrapper}>
+    <section 
+        className={styles.heroContainer} 
+        id="hero-section" 
+        data-scroll-section
+    >
+        <div className={styles.heroContent}>
             
-            {/* Imagem Principal (Proporção vertical alongada) */}
-            <Image
-              src={PROFILE_IMAGE_SRC}
-              alt="Foto de perfil profissional"
-              layout="fill" // Permite que a imagem preencha o container
-              objectFit="cover"
-              className={styles.mainImage}
-            />
+            {/* === COLUNA 1: IMAGEM + OVERLAY + TEXTO CURTO === */}
+            <div className={styles.columnLeft}>
+                
+                {/* Elementos decorativos (Acima da Imagem) */}
+                {/* Posicionaremos estes com mais precisão via CSS */}
+                <div className={styles.decorativeElements}>
+                    <div className={styles.decorativeShape}></div>
+                    <div className={styles.decorativeShape}></div>
+                </div>
 
-            {/* Bloco de texto sobreposto (Canto Inferior Esquerdo) */}
-            <div className={styles.imageTextBlock}>
-              <p className={styles.imageText}>
-                Desenvolvedor Full Stack | TypeScript e Next.js
-              </p>
+                {/* Container da Imagem com Proporção Vertical Alongada */}
+                <div className={styles.imageWrapper}>
+                    <Image
+                        src="/img/Phone Link/profile.jpg" // CAMINHO DA SUA IMAGEM
+                        alt="Foto de perfil"
+                        layout="fill"
+                        objectFit="cover"
+                        className={styles.mainImage}
+                    />
+
+                    {/* Bloco de texto sobreposto (Fundo preto) */}
+                    <div className={styles.imageTextBlock}>
+                        <p className={styles.imageText}>
+                            {profileData.imageText}
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            {/* === COLUNA 2: TÍTULO ENORME + TEXTO ARTÍSTICO + CONTATO === */}
+            <div className={styles.columnRight}>
+                
+                {/* Título Principal Serifado e com Peso Visual */}
+                <h1 className={styles.mainTitle}>
+                    {profileData.title}
+                </h1>
+
+                {/* Camada de texto artístico repetido (Outline) */}
+                {/* Ajustamos o conteúdo para ficar mais parecido com a referência */}
+                <div className={styles.artisticTextLayer}>
+                    <p className={styles.artisticText}>TFC</p>
+                    <p className={styles.artisticText}>FOLIO</p>
+                    <p className={styles.artisticText}>TFC</p>
+                    <p className={styles.artisticText}>PORTFOLIO</p>
+                </div>
+
+                {/* Bloco de informações de contato (Alinhado à direita/Fim da coluna) */}
+                <div className={styles.contactBlock}>
+                    {profileData.contactItems.map((item, index) => (
+                        <p key={index} className={styles.contactItem}>{item}</p>
+                    ))}
+                </div>
+            </div>
         </div>
 
-        {/* Coluna 2: Título e Informações (Direita) */}
-        <div className={styles.columnRight}>
-          
-          {/* Camada de texto artístico repetido (Outline) - Z-index baixo */}
-          <div className={styles.artisticTextLayer}>
-            <p className={styles.artisticText}>FOLIO</p>
-            <p className={styles.artisticText}>TFC</p>
-            <p className={styles.artisticText}>PORTFOLIO</p>
-          </div>
-
-          {/* Título Principal - Z-index alto para sobrepor o texto artístico */}
-          <h1 className={styles.mainTitle}>
-            PORT<span className={styles.titleBreak} />FOLIO
-          </h1>
-
-          {/* Bloco de informações de contato (Alinhado à direita) */}
-          <div className={styles.contactBlock}>
-            <p className={styles.contactItem}>BE: /seu-usuario</p>
-            <p className={styles.contactItem}>IG: @seu-usuario</p>
-            <p className={styles.contactItem}>LI: /seu-usuario</p>
-          </div>
+        {/* Faixa inferior menor (Rodapé visual) - Agora no fluxo normal */}
+        <div className={styles.heroFooterStrip}>
+            <div className={styles.footerStripContent}>
+                <p className={styles.footerStripText}>
+                    i love design and anything related to art. i approach problems in a rational and pragmatic way and seek the simplest and most functional solutions possible.
+                </p>
+                {/* Outro elemento decorativo no canto inferior direito da faixa */}
+                <div className={styles.decorativeShapeBottomRight}></div>
+            </div>
         </div>
-      </div>
-
-      {/* Faixa Inferior Menor (Rodapé Visual) */}
-      <div className={styles.heroFooterStrip}>
-        <p>© 2025 Victor Cardoso. Todos os direitos reservados.</p>
-      </div>
     </section>
   );
 };

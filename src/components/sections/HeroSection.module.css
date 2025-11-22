@@ -1,245 +1,337 @@
-/* src/components/sections/HeroSection.module.css */
+/* src/components/sections/HeroSection.module.css - Versão Refinada V5 */
 
-/* --- Configurações de Tipografia (Baseado na sua fonte Satoshi) --- */
+/* ======================================================================
+   CONFIGURAÇÕES GLOBAIS (DRY - Reutilizando variáveis de src/app/globals.css)
+   ====================================================================== */
 
-/* Recomendação: Use o sistema de fonte do Next.js (next/font) para carregar o Satoshi
-   e use variáveis CSS. Se isso não for possível, defina as fontes aqui: */
+/*
+  Nota: A composição deve ser usada para agrupar as propriedades de fonte
+  que são baseadas nas definições de @font-face no seu globals.css
+*/
 
 .fontSerif {
-    /* Usaremos a fonte Black para dar peso ao título como solicitado */
-    font-family: 'Satoshi Black', serif;
-    font-weight: 900;
+    /* Mapeando a fonte 'Satoshi' com peso Black para o título */
+    font-family: var(--font-display, 'Satoshi', serif); /* Fallback para garantir */
+    font-weight: 900; 
 }
 
 .fontSans {
-    font-family: 'Satoshi Regular', sans-serif;
-    font-weight: 400;
+    /* Mapeando a fonte 'Satoshi' com peso Regular/Médio para o corpo */
+    font-family: var(--font-primary, 'Satoshi', sans-serif);
+    font-weight: 400; 
 }
 
 
-/* --- 1. Estrutura Geral --- */
+/* ======================================================================
+   1. ESTRUTURA GERAL E LAYOUT
+   ====================================================================== */
 
 .heroContainer {
     width: 100%;
-    /* Removido 100vw para evitar problemas de scroll horizontal no mobile */
-    background-color: #f7f7f7; /* Neutro claro */
-    display: flex;
-    flex-direction: column;
-}
-
-.heroMain {
-    display: flex;
-    gap: 80px; /* Mais espaço para separar as colunas */
-    padding: 100px 40px; /* Padding generoso */
-    max-width: 1440px; 
-    margin: 0 auto;
-    width: 100%;
-    min-height: 80vh; /* Garante que o hero seja alto */
-}
-
-/* --- 2. Layout em Duas Colunas (Desktop) --- */
-
-.columnLeft {
-    flex: 1; 
+    /* Utiliza a cor de fundo clara global */
+    background-color: var(--color-background-light); 
     display: flex;
     flex-direction: column;
     position: relative;
-    /* Adiciona uma margem superior para o espaçamento dos elementos decorativos */
-    margin-top: 30px; 
-    max-width: 500px;
+    overflow: hidden; 
+}
+
+.heroContent {
+    display: flex;
+    gap: 80px; 
+    /* Utiliza a variável global de padding e aplica verticalmente um valor maior */
+    padding: 100px var(--container-padding);
+    max-width: 1440px; 
+    margin: 0 auto;
+    width: 100%;
+    min-height: 80vh; 
+    position: relative; 
+}
+
+/* --- Layout em Duas Colunas (Desktop) --- */
+.columnLeft {
+    flex: 1; 
+    position: relative;
+    padding-top: 50px; 
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 2; 
 }
 
 .columnRight {
     flex: 1.2; 
     display: flex;
     flex-direction: column;
+    /* Alinha o Título ao topo e o Contato (eventualmente) ao fundo */
     justify-content: space-between; 
     position: relative;
+    padding-top: 20px; 
+    z-index: 1; 
 }
 
-/* --- Coluna 1: Imagem com Overlay e Decorativos --- */
+/* ======================================================================
+   2. COLUNA 1: IMAGEM E ELEMENTOS
+   ====================================================================== */
 
 .decorativeElements {
     position: absolute;
-    top: -30px; 
-    left: 0px;
+    top: 0; 
+    left: 0; 
     display: flex;
-    gap: 15px;
-    z-index: 20; /* Z-index alto para ficar acima de tudo */
+    gap: 12px; /* Reduzido o gap */
+    z-index: 20;
 }
 
 .decorativeShape {
-    width: 25px;
-    height: 25px;
-    border: 4px solid #1a1a1a; 
+    width: 25px; 
+    height: 25px; 
+    background-color: var(--color-text-primary); 
+    /* Usando transform para o efeito 'estrela', mas ajustando a rotação */
+    transform: rotate(30deg); 
+    border-radius: 4px; 
 }
 
 .imageWrapper {
     position: relative;
     width: 100%;
-    /* Proporção vertical alongada: 4:5 -> 125% */
-    padding-top: 125%; 
+    max-width: 450px; 
+    padding-top: 135%; 
+    margin-top: 20px; 
     z-index: 10;
-    /* A chave: Garante que a imagem se comporta como parte do fluxo do documento */
+    /* Reduzida a borda para 2px, dando um ar mais limpo */
+    border: 2px solid var(--color-text-primary);
 }
 
-/* O Overlay Sólido (Rectangular) */
+/* Overlay Sólido (Retangular) - Criando profundidade */
 .imageWrapper::before {
     content: '';
     position: absolute;
-    top: 15px; /* Deslocamento para profundidade */
-    left: 15px;
+    /* Padrão de deslocamento refinado (20px) */
+    top: 20px; 
+    left: 20px;
     width: 100%;
     height: 100%;
-    background-color: #d1d1d1; /* Tom neutro mais escuro */
-    z-index: -1; /* Fica atrás da imagem */
-    border: 1px solid #1a1a1a; /* Borda sutil */
+    /* Usando a cor de acento global para o overlay */
+    background-color: var(--color-background-accent);
+    z-index: -1;
+    border: 2px solid var(--color-text-primary);
 }
 
 .mainImage {
-    /* A propriedade 'layout="fill"' do Next/Image faz o trabalho,
-       apenas garantimos o z-index e a borda. */
-    border: 3px solid #1a1a1a; 
+    /* Garante que a imagem principal não tenha borda (pois o wrapper já tem) */
     z-index: 1;
 }
 
 .imageTextBlock {
     position: absolute;
-    bottom: -20px; 
-    left: -20px; 
-    background-color: #1a1a1a; 
-    color: #ffffff;
-    padding: 12px 18px;
-    z-index: 30; /* Acima de tudo para destaque */
-    /* Removido o rotate para um visual mais limpo */
-}
-
-.imageText {
+    /* Deslocamento mais agressivo para o canto */
+    bottom: -30px; 
+    left: -30px; 
+    background-color: var(--color-text-highlight); 
+    color: var(--color-text-light);
+    padding: 14px 20px;
+    z-index: 30; 
+    max-width: 280px; 
     font-size: 0.8rem;
-    white-space: nowrap;
+    line-height: 1.4;
+    text-align: left;
     composes: fontSans;
 }
 
-/* --- Coluna 2: Título e Informações --- */
+.imageText {
+    margin: 0;
+}
+
+
+/* ======================================================================
+   3. COLUNA 2: TÍTULO, ARTE TIPOGRÁFICA E CONTATO
+   ====================================================================== */
 
 .mainTitle {
-    font-size: 10vw; 
-    line-height: 0.9;
+    font-size: 11vw; /* Aumentado para mais peso visual */
+    line-height: 0.8; /* Mais apertado para maior impacto visual */
     margin: 0;
-    color: #1a1a1a;
+    color: var(--color-text-highlight);
     text-transform: uppercase;
     composes: fontSerif;
     position: relative;
-    z-index: 50; /* Z-index muito alto para sobrepor o texto artístico */
+    z-index: 50; 
+    letter-spacing: -0.06em; /* Mais espaçamento negativo */
+    padding-right: 20px; 
+    /* Adicionando padding-bottom para criar espaço para o Contact Block */
+    padding-bottom: 50px; 
 }
 
-/* Quebra de linha visível apenas no mobile agora */
-.titleBreak {
+.mainTitle > span {
     display: none; 
 }
 
 /* Camada de texto artístico repetido (Outline) */
 .artisticTextLayer {
     position: absolute;
-    top: -50px; /* Ajusta a posição verticalmente */
-    right: 0;
-    z-index: 5; /* Fica abaixo do título principal */
-    opacity: 0.08;
+    top: 50px; /* Ajuste para centralizar visualmente melhor com o título */
+    right: 0; 
+    z-index: 5; 
+    /* Reduzida a opacidade para um efeito mais sutil e de fundo */
+    opacity: 0.08; 
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-end; 
     pointer-events: none;
-    line-height: 0.7; /* Mais apertado */
+    line-height: 0.6; /* Extremamente apertado */
+    transform: translateX(10%); 
 }
 
 .artisticText {
     font-size: 15vw; 
     margin: 0;
     composes: fontSerif;
-    
-    /* Efeito Outline (Stroke) */
     color: transparent; 
-    -webkit-text-stroke: 1px #1a1a1a; /* Contorno mais fino */
-    text-stroke: 1px #1a1a1a;
+    -webkit-text-stroke: 1px var(--color-text-primary); 
+    text-stroke: 1px var(--color-text-primary);
+    letter-spacing: 0.1em; /* Mais espaçamento para a arte tipográfica */
 }
 
 .contactBlock {
     display: flex;
     flex-direction: column;
     align-items: flex-end; 
-    gap: 15px;
-    padding-bottom: 20px;
+    gap: 8px; /* Reduzido o gap para mais minimalismo */
+    padding-top: 10px; /* Separando do padding-bottom do título */
     composes: fontSans;
     z-index: 50;
     font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 .contactItem {
     margin: 0;
-    letter-spacing: 0.05em; /* Aumenta o espaçamento das letras para um visual clean */
+    color: var(--color-text-primary);
+    letter-spacing: 0.05em; 
 }
 
-/* --- Faixa Inferior Menor (Rodapé Visual) --- */
 
+/* ======================================================================
+   4. FAIXA INFERIOR (RODAPÉ VISUAL)
+   ====================================================================== */
 .heroFooterStrip {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    padding: 15px 40px;
-    text-align: center;
-    font-size: 0.8rem;
-    composes: fontSans;
+    background-color: var(--color-text-primary);
+    color: var(--color-background-light);
+    /* Utilizando a variável de padding global */
+    padding: 30px var(--container-padding); 
+    width: 100%;
+    margin-top: 0; 
+    position: relative;
 }
 
-/* --- 4. Responsividade (Telas Menores) --- */
+.footerStripContent {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinhamento centralizado para texto e forma */
+    gap: 20px;
+}
 
-@media (max-width: 992px) {
-    .heroMain {
+.footerStripText {
+    margin: 0;
+    font-size: 0.75rem; 
+    line-height: 1.6;
+    max-width: 450px; /* Ligeiramente mais largo */
+    text-align: left;
+    composes: fontSans;
+    opacity: 0.9; /* Um pouco mais de contraste */
+}
+
+.decorativeShapeBottomRight {
+    width: 25px;
+    height: 25px;
+    background-color: var(--color-text-light); 
+    transform: rotate(30deg); /* Consistente com os elementos de topo */
+    border-radius: 4px;
+    flex-shrink: 0; 
+}
+
+/* ======================================================================
+   RESPONSIVIDADE (REFINADA)
+   ====================================================================== */
+
+@media (max-width: 1024px) {
+    .heroContent {
         flex-direction: column; 
-        padding: 50px 20px;
-        gap: 60px; 
-        min-height: auto;
+        padding: 50px var(--container-padding-mobile);
+        gap: 50px; 
     }
 
     .columnLeft {
-        max-width: 100%; 
-        margin-top: 0;
+        padding-top: 0; 
+        order: 1;
+        align-items: center; 
+    }
+
+    .imageWrapper {
+        max-width: 90%; 
+        margin: 0 auto;
+    }
+
+    .imageTextBlock {
+        bottom: -25px;
+        left: 50%; 
+        transform: translateX(-50%);
+        max-width: 90%;
+        text-align: center;
+        font-size: 0.7rem; /* Reduzido para caber melhor */
+        line-height: 1.4;
+    }
+
+    .decorativeElements {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -15px; /* Ajuste fino para mobile */
     }
 
     .columnRight {
         align-items: flex-start;
+        padding-top: 20px; 
+        order: 2;
     }
     
     .mainTitle {
         font-size: 15vw; 
-    }
-
-    .titleBreak {
-        display: inline; /* Força quebra de linha em telas pequenas */
+        text-align: left;
     }
 
     .artisticTextLayer {
         right: auto;
         left: 0;
+        top: 80px; 
         align-items: flex-start;
-        top: -10px;
+        transform: translateX(0); 
+        opacity: 0.08;
+    }
+
+    .artisticText {
+        font-size: 20vw;
+        -webkit-text-stroke: 0.5px var(--color-text-primary);
+        text-stroke: 0.5px var(--color-text-primary);
+        letter-spacing: 0.05em;
     }
 
     .contactBlock {
         align-items: flex-start; 
-        margin-top: 30px;
+        padding-top: 40px;
     }
-    
-    .imageTextBlock {
-        bottom: -15px;
-        left: 0px;
-    }
-}
 
-@media (max-width: 500px) {
-    .mainTitle {
-        font-size: 18vw; 
+    .heroFooterStrip {
+        padding: 20px var(--container-padding-mobile);
     }
-    .artisticText {
-        font-size: 25vw;
+    .footerStripContent {
+        flex-direction: column;
+        align-items: flex-start; /* Alinhamento esquerdo para consistência do mobile */
+    }
+    .footerStripText {
+        text-align: left;
+        margin-bottom: 10px;
     }
 }
