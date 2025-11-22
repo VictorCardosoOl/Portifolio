@@ -1,248 +1,245 @@
 /* src/components/sections/HeroSection.module.css */
 
-.hero {
-  /* Ocupa a altura total do ecrã menos a altura da navegação, se houver */
-  min-height: 100vh; 
-  padding: 8rem 0 4rem; /* Padding superior, inferior e nas laterais */
-  background-color: var(--color-background-light); /* Fundo branco */
-  color: var(--color-text-primary);
-  position: relative;
-  overflow: hidden; /* Importante para que as tags flutuantes não causem scroll indesejado */
+/* --- Configurações de Tipografia (Baseado na sua fonte Satoshi) --- */
+
+/* Recomendação: Use o sistema de fonte do Next.js (next/font) para carregar o Satoshi
+   e use variáveis CSS. Se isso não for possível, defina as fontes aqui: */
+
+.fontSerif {
+    /* Usaremos a fonte Black para dar peso ao título como solicitado */
+    font-family: 'Satoshi Black', serif;
+    font-weight: 900;
 }
 
-.heroContent {
-  max-width: 1100px; /* Alinhamento do seu container principal */
-  margin: 0 auto;
-  padding: 0 var(--container-padding); /* 2rem ou 40px */
-  display: flex;
-  gap: 5%;
-  align-items: center;
-  position: relative;
-  height: 100%;
-}
-
-/* Coluna Esquerda - Conteúdo Principal */
-.leftColumn {
-  flex: 1; /* Ocupa o espaço restante */
-  padding-right: 20px;
-  max-width: 55%;
-}
-
-.title {
-  font-size: 5rem; /* Título grande */
-  font-weight: 900;
-  line-height: 1;
-  margin-bottom: 2rem;
-  color: var(--color-text-highlight);
-  letter-spacing: -0.05em;
-}
-
-.subtitle {
-  font-size: 1.25rem;
-  font-weight: 400;
-  line-height: 1.6;
-  margin-bottom: 3rem;
-  color: var(--color-text-secondary);
-  max-width: 80%;
-}
-
-/* Estilo para o botão do LinkedIn */
-.linkedinLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid var(--color-text-primary);
-  background-color: var(--color-background-light);
-  color: var(--color-text-primary);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: var(--border-radius-md);
-  transition: all 0.3s ease;
-}
-
-.linkedinLink:hover {
-  background-color: var(--color-text-primary);
-  color: var(--color-background-light);
-}
-
-.linkedinIcon {
-  width: 16px;
-  height: 16px;
-  /* Ícone simples de LinkedIn (use SVG ou um ícone de biblioteca) */
+.fontSans {
+    font-family: 'Satoshi Regular', sans-serif;
+    font-weight: 400;
 }
 
 
-/* Coluna Direita - Foto + Tags + Formas */
-.rightColumn {
-  flex: 1;
-  max-width: 45%;
-  min-height: 500px; /* Altura mínima para visualizar a composição */
-  position: relative; /* Contexto para posicionamento absoluto */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* --- 1. Estrutura Geral --- */
+
+.heroContainer {
+    width: 100%;
+    /* Removido 100vw para evitar problemas de scroll horizontal no mobile */
+    background-color: #f7f7f7; /* Neutro claro */
+    display: flex;
+    flex-direction: column;
 }
 
-.photoContainer {
-  position: relative;
-  width: 70%; 
-  aspect-ratio: 1 / 1.1; /* Proporção ligeiramente vertical para a foto */
-  z-index: 10;
+.heroMain {
+    display: flex;
+    gap: 80px; /* Mais espaço para separar as colunas */
+    padding: 100px 40px; /* Padding generoso */
+    max-width: 1440px; 
+    margin: 0 auto;
+    width: 100%;
+    min-height: 80vh; /* Garante que o hero seja alto */
 }
 
-.photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--border-radius-md);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+/* --- 2. Layout em Duas Colunas (Desktop) --- */
+
+.columnLeft {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    /* Adiciona uma margem superior para o espaçamento dos elementos decorativos */
+    margin-top: 30px; 
+    max-width: 500px;
 }
 
-/* Formas Geométricas (Atrás da Foto) */
-.shapeSquare {
-  position: absolute;
-  width: 80%;
-  aspect-ratio: 1 / 1;
-  background-color: var(--color-background-accent); /* Cinza claro */
-  top: 15%;
-  left: 25%;
-  transform: translate(-50%, -50%) rotate(10deg); /* Ligeiramente rotacionado */
-  z-index: 1;
-  border-radius: var(--border-radius-md);
+.columnRight {
+    flex: 1.2; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    position: relative;
 }
 
-.shapeCircle {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  background-color: var(--color-primary-dark); /* Cinza escuro */
-  border-radius: 50%;
-  bottom: 0%;
-  right: 15%;
-  z-index: 2;
-  opacity: 0.1;
+/* --- Coluna 1: Imagem com Overlay e Decorativos --- */
+
+.decorativeElements {
+    position: absolute;
+    top: -30px; 
+    left: 0px;
+    display: flex;
+    gap: 15px;
+    z-index: 20; /* Z-index alto para ficar acima de tudo */
 }
 
-/* Tags Flutuantes */
-.tag {
-  position: absolute;
-  padding: 0.75rem 1rem;
-  background-color: var(--color-background-light); /* Branco */
-  border: 1px solid var(--color-border);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: var(--border-radius-sm);
-  z-index: 20;
-  text-transform: uppercase;
-  color: var(--color-text-primary);
-  letter-spacing: 0.5px;
+.decorativeShape {
+    width: 25px;
+    height: 25px;
+    border: 4px solid #1a1a1a; 
 }
 
-.tagRight {
-  top: 25%;
-  right: -5%; /* Posicionado à direita da coluna */
-  transform: rotate(3deg);
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    /* Proporção vertical alongada: 4:5 -> 125% */
+    padding-top: 125%; 
+    z-index: 10;
+    /* A chave: Garante que a imagem se comporta como parte do fluxo do documento */
 }
 
-.tagLeft {
-  bottom: 10%;
-  left: -10%; /* Posicionado à esquerda da coluna */
-  transform: rotate(-5deg);
+/* O Overlay Sólido (Rectangular) */
+.imageWrapper::before {
+    content: '';
+    position: absolute;
+    top: 15px; /* Deslocamento para profundidade */
+    left: 15px;
+    width: 100%;
+    height: 100%;
+    background-color: #d1d1d1; /* Tom neutro mais escuro */
+    z-index: -1; /* Fica atrás da imagem */
+    border: 1px solid #1a1a1a; /* Borda sutil */
 }
 
-/* Bloco de Contato Fixo */
+.mainImage {
+    /* A propriedade 'layout="fill"' do Next/Image faz o trabalho,
+       apenas garantimos o z-index e a borda. */
+    border: 3px solid #1a1a1a; 
+    z-index: 1;
+}
+
+.imageTextBlock {
+    position: absolute;
+    bottom: -20px; 
+    left: -20px; 
+    background-color: #1a1a1a; 
+    color: #ffffff;
+    padding: 12px 18px;
+    z-index: 30; /* Acima de tudo para destaque */
+    /* Removido o rotate para um visual mais limpo */
+}
+
+.imageText {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    composes: fontSans;
+}
+
+/* --- Coluna 2: Título e Informações --- */
+
+.mainTitle {
+    font-size: 10vw; 
+    line-height: 0.9;
+    margin: 0;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    composes: fontSerif;
+    position: relative;
+    z-index: 50; /* Z-index muito alto para sobrepor o texto artístico */
+}
+
+/* Quebra de linha visível apenas no mobile agora */
+.titleBreak {
+    display: none; 
+}
+
+/* Camada de texto artístico repetido (Outline) */
+.artisticTextLayer {
+    position: absolute;
+    top: -50px; /* Ajusta a posição verticalmente */
+    right: 0;
+    z-index: 5; /* Fica abaixo do título principal */
+    opacity: 0.08;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    pointer-events: none;
+    line-height: 0.7; /* Mais apertado */
+}
+
+.artisticText {
+    font-size: 15vw; 
+    margin: 0;
+    composes: fontSerif;
+    
+    /* Efeito Outline (Stroke) */
+    color: transparent; 
+    -webkit-text-stroke: 1px #1a1a1a; /* Contorno mais fino */
+    text-stroke: 1px #1a1a1a;
+}
+
 .contactBlock {
-  position: absolute;
-  bottom: 0;
-  right: var(--container-padding); /* 2rem ou 40px da direita */
-  background-color: var(--color-background-accent);
-  padding: 1.5rem;
-  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0; /* Arredondado no topo */
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
-  z-index: 30;
-  min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    gap: 15px;
+    padding-bottom: 20px;
+    composes: fontSans;
+    z-index: 50;
+    font-size: 0.9rem;
 }
 
 .contactItem {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
+    margin: 0;
+    letter-spacing: 0.05em; /* Aumenta o espaçamento das letras para um visual clean */
 }
 
-.contactIcon {
-  width: 18px;
-  height: 18px;
-  color: var(--color-text-highlight);
-}
+/* --- Faixa Inferior Menor (Rodapé Visual) --- */
 
-/* Responsividade */
-@media (max-width: 1024px) {
-  .heroContent {
-    flex-direction: column;
+.heroFooterStrip {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    padding: 15px 40px;
     text-align: center;
-    gap: 4rem;
-  }
-
-  .leftColumn,
-  .rightColumn {
-    max-width: 100%;
-    padding: 0;
-  }
-
-  .leftColumn {
-    order: 2; /* Move a coluna de texto para baixo em telas menores */
-  }
-
-  .title {
-    font-size: 3.5rem;
-  }
-  
-  .subtitle {
-    max-width: 100%;
-    margin-bottom: 2rem;
-  }
-
-  .linkedinLink {
-    margin: 0 auto;
-  }
-
-  .rightColumn {
-    order: 1; /* Move a coluna da foto para cima */
-    min-height: 400px;
-    margin-top: 2rem;
-  }
-  
-  .tagRight,
-  .tagLeft {
-    display: none; /* Oculta tags flutuantes para simplicidade em mobile */
-  }
-
-  .contactBlock {
-    position: static; /* Volta para fluxo normal em mobile */
-    margin: 2rem auto 0;
-    width: 90%;
-    border-radius: var(--border-radius-md);
-  }
+    font-size: 0.8rem;
+    composes: fontSans;
 }
 
-@media (max-width: 600px) {
-  .hero {
-    padding-top: 6rem;
-  }
-  
-  .title {
-    font-size: 2.5rem;
-  }
+/* --- 4. Responsividade (Telas Menores) --- */
 
-  .subtitle {
-    font-size: 1rem;
-  }
+@media (max-width: 992px) {
+    .heroMain {
+        flex-direction: column; 
+        padding: 50px 20px;
+        gap: 60px; 
+        min-height: auto;
+    }
+
+    .columnLeft {
+        max-width: 100%; 
+        margin-top: 0;
+    }
+
+    .columnRight {
+        align-items: flex-start;
+    }
+    
+    .mainTitle {
+        font-size: 15vw; 
+    }
+
+    .titleBreak {
+        display: inline; /* Força quebra de linha em telas pequenas */
+    }
+
+    .artisticTextLayer {
+        right: auto;
+        left: 0;
+        align-items: flex-start;
+        top: -10px;
+    }
+
+    .contactBlock {
+        align-items: flex-start; 
+        margin-top: 30px;
+    }
+    
+    .imageTextBlock {
+        bottom: -15px;
+        left: 0px;
+    }
+}
+
+@media (max-width: 500px) {
+    .mainTitle {
+        font-size: 18vw; 
+    }
+    .artisticText {
+        font-size: 25vw;
+    }
 }
