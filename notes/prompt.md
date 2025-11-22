@@ -18,6 +18,8 @@ Identifique potenciais gargalos de performance ou riscos técnicos.
 
 Com base na analise do repositorio me ajude a realizar a seguinte tarefa:
 
+Chat essa parte do codigo não esta sendo exibida no meu footer, pode verificar o que acontece por favor?
+
 
 Menu (staggeredMenu): Ele não está conseguindo localizar as seções do site e está retornando a mensagem de que não há itens. Quero que você identifique e corrija o problema para que o menu reconheça corretamente todas as seções.
 

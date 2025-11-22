@@ -307,7 +307,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  opacity: 0; /* MELHORIA 3: Para animação fade-in */
+  /* Removido: opacity: 0; - Agora estará sempre visível */ 
+  /* Se precisar de reativar a animação, apenas descomente ou adicione novamente */
 }
 
 .footer-nav {
