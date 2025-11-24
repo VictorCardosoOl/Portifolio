@@ -1,6 +1,7 @@
 /* src/app/globals.css */
 
-/* 1. Fontes Satoshi (Mantidas - Ótima escolha!) */
+/* 1. Fontes Satoshi (Definições @font-face) */
+/* DOCUMENTAÇÃO: Estas definições garantem que a fonte 'Satoshi' esteja disponível com diferentes pesos. */
 @font-face {
   font-family: 'Satoshi';
   src: url('/fonts/Satoshi_Complete/Fonts/WEB/fonts/Satoshi-Regular.woff2') format('woff2');
@@ -31,23 +32,23 @@
 }
 
 
-/* 2. ATUALIZAÇÃO DA PALETA: "Light Mode" (Branco com detalhes Pretos) */
+/* 2. Variáveis CSS Globais (Paleta Light Mode) */
 :root {
-  /* Cores (Novo Light Mode) */
-  --color-background-light: #FFFFFF; /* Fundo principal branco */
-  --color-background-accent: #F5F5F5; /* Um cinza muito claro para fundos de seção */
-  --color-text-primary: #1A1A1A;     /* Texto principal (preto suave) */
-  --color-text-secondary: #555555;   /* Texto secundário (cinza escuro) */
-  --color-text-highlight: #000000;   /* Títulos e destaques (preto puro) */
-  --color-primary: #121212;          /* Cor primária (preto, antes era verde) */
-  --color-primary-dark: #333333;     /* Variação da cor primária (cinza escuro) */
-  --color-border: #E0E0E0;           /* Cor das bordas (cinza claro) */
+  /* Cores */
+  --color-background-light: #FFFFFF; 
+  --color-background-accent: #F5F5F5; 
+  --color-text-primary: #1A1A1A;     
+  --color-text-secondary: #555555;   
+  --color-text-highlight: #000000;   
+  --color-primary: #121212;          /* Novo Destaque (Preto) */
+  --color-primary-dark: #333333;     
+  --color-border: #E0E0E0;           
 
-  /* 3. Fontes (Mantidas) */
+  /* Fontes */
   --font-primary: 'Satoshi', sans-serif;
   --font-display: 'Satoshi', sans-serif;
 
-  /* Outras variáveis (Mantidas) */
+  /* Outras variáveis */
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
   --border-radius-lg: 16px;
@@ -55,18 +56,27 @@
   --section-padding: 6rem 0;
 }
 
-/* 4. Estilos de base atualizados para Light Mode */
-body {
-  background-color: var(--color-background-light); /* Fundo branco */
-  color: var(--color-text-primary);                 /* Texto escuro */
-  font-family: var(--font-primary);
-  font-weight: 400; 
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 3. Reset Global: Solução para "Selector "*" is not pure" */
+* {
+    /* DOCUMENTAÇÃO: Aplica o box-sizing e remove margens/padding padrão. */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
+/* 4. Estilos de base atualizados */
+body {
+  /* DOCUMENTAÇÃO: Aplica a fonte principal, cores e remove o overflow horizontal. */
+  background-color: var(--color-background-light); 
+  color: var(--color-text-primary);                 
+  font-family: var(--font-primary);
+  font-weight: 400; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Outros estilos globais */
 main.main-content {
   min-height: calc(100vh - 120px);
 }
@@ -76,16 +86,12 @@ a {
     text-decoration: none;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  color: var(--color-text-highlight); /* Títulos em preto */
+  color: var(--color-text-highlight); 
   font-weight: 700; 
 }
 
 a:hover {
-  color: var(--color-text-secondary); /* Hover para cinza */
+  color: var(--color-text-secondary); 
 }
