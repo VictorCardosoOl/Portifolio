@@ -33,20 +33,21 @@ const HeroSection: React.FC = () => {
         <div className={styles.heroText}>
             <h1>
                 {/* Classes de cores em camelCase */}
-                <span className={styles.textLightGrey}>I am</span>{' '}
-                <span className={styles.textDarkBold}>Julia</span>{' '}
-                <span className={styles.textLightGrey}>Nascimento, a</span>
+                <span className={styles.textLightGrey}>Sou o</span>{' '}
+                <span className={styles.textDarkBold}>Victor</span>{' '}
+                <span className={styles.textLightGrey}>Cardoso,</span>
                 <br />
-                <span className={styles.textLightGrey}>brazilian</span>{' '}
-                <span className={styles.textDarkBold}>UX Designer</span>{' '}
-                <span className={styles.textLightGrey}>at</span>
+                <span className={styles.textDarkBold}>Software Developer</span>{' '}
+                <span className={styles.textDarkBold}>&</span>{' '}
+                <span className={styles.textLightGrey}>estudante de</span>
+                <span className={styles.textLightGrey}> Engenharia da Computação,</span>{' '}
+        
+                <span className={styles.textGreenBold}>criando soluções</span>{' '}
+                <span className={styles.textGreenBold}>para você!</span>{' '}
+                
+                
                 <br />
-                <span className={styles.textGreenBold}>Millennium</span>{' '}
-                <span className={styles.textFadedGrey}>bcp Bank |</span>
-                <br />
-                <span className={styles.textFadedGrey}>Spark 2D Digital Experience</span>
-                <br />
-                <span className={styles.textGreenBold}>in Portugal.</span>
+                
             </h1>
         </div>
 
