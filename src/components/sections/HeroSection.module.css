@@ -1,337 +1,113 @@
-/* src/components/sections/HeroSection.module.css - Versão Refinada V5 */
-
-/* ======================================================================
-   CONFIGURAÇÕES GLOBAIS (DRY - Reutilizando variáveis de src/app/globals.css)
-   ====================================================================== */
-
-/*
-  Nota: A composição deve ser usada para agrupar as propriedades de fonte
-  que são baseadas nas definições de @font-face no seu globals.css
-*/
-
-.fontSerif {
-    /* Mapeando a fonte 'Satoshi' com peso Black para o título */
-    font-family: var(--font-display, 'Satoshi', serif); /* Fallback para garantir */
-    font-weight: 900; 
+:root {
+  --font-principal: 'Poppins', sans-serif;
+  --cor-fundo: #fdfdfd;
+  --cor-dark-bold: #333333;
+  --cor-light-grey: #a8a8a8;
+  --cor-faded-grey: #d2d2d2;
+  --cor-green-bold: #4A5C50;
 }
 
-.fontSans {
-    /* Mapeando a fonte 'Satoshi' com peso Regular/Médio para o corpo */
-    font-family: var(--font-primary, 'Satoshi', sans-serif);
-    font-weight: 400; 
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-principal);
+  background: var(--cor-fundo);
+  overflow-x: hidden;
 }
 
-
-/* ======================================================================
-   1. ESTRUTURA GERAL E LAYOUT
-   ====================================================================== */
-
-.heroContainer {
-    width: 100%;
-    /* Utiliza a cor de fundo clara global */
-    background-color: var(--color-background-light); 
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden; 
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  min-height: 100vh;
+  padding: 2rem 5vw;
+  align-items: center;
+  gap: 3rem;
+  position: relative;
 }
 
-.heroContent {
-    display: flex;
-    gap: 80px; 
-    /* Utiliza a variável global de padding e aplica verticalmente um valor maior */
-    padding: 100px var(--container-padding);
-    max-width: 1440px; 
+.hero-note {
+  position: absolute;
+  top: 2.5rem;
+  left: 2.5rem;
+  font-size: 0.8rem;
+  color: #555;
+  opacity: 0;
+  animation: fadeIn 1s ease forwards 0.5s;
+}
+
+/* --- AQUI ACONTECE A MAGIA DA MÁSCARA --- */
+.hero-image {
+  max-width: 350px; /* Tamanho da área da imagem */
+  aspect-ratio: 1 / 1; /* Garante que a área seja sempre quadrada */
+  position: relative; /* Contexto para o posicionamento da imagem */
+
+  /* Animação de entrada geral */
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards 0.8s;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garante que a imagem cubra a área sem distorcer */
+
+  /* APLICAÇÃO DA MÁSCARA */
+  -webkit-mask-image: url('mascara-rabisco.svg'); /* Para compatibilidade com Chrome/Safari */
+  mask-image: url('mascara-rabisco.svg'); /* A nossa máscara SVG */
+  
+  -webkit-mask-size: 0% 0%; /* Tamanho inicial da máscara (invisível) */
+  mask-size: 0% 0%; /* Tamanho inicial da máscara (invisível) */
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+
+  /* Animação que "raspa" e revela a imagem */
+  animation: revelarComMascara 2s cubic-bezier(0.7, 0, 0.3, 1) forwards 1.2s;
+}
+
+/* O texto (sem alterações) */
+.hero-text h1 {
+  font-size: clamp(2rem, 5vw, 4rem); 
+  font-weight: 300;
+  line-height: 1.3;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1.5s ease forwards 1.5s; /* Delay ajustado */
+}
+
+.text-light-grey { color: var(--cor-light-grey); }
+.text-dark-bold   { color: var(--cor-dark-bold); font-weight: 700; }
+.text-green-bold  { color: var(--cor-green-bold); font-weight: 700; }
+.text-faded-grey  { color: var(--cor-faded-grey); }
+
+/* Animações */
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+/* NOVA ANIMAÇÃO: Anima o tamanho da máscara de 0% para 100% */
+@keyframes revelarComMascara {
+  to {
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+  }
+}
+
+/* Responsividade (sem alterações) */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1rem;
+    padding-top: 6rem;
+  }
+  .hero-image {
+    max-width: 250px;
     margin: 0 auto;
-    width: 100%;
-    min-height: 80vh; 
-    position: relative; 
-}
-
-/* --- Layout em Duas Colunas (Desktop) --- */
-.columnLeft {
-    flex: 1; 
-    position: relative;
-    padding-top: 50px; 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    z-index: 2; 
-}
-
-.columnRight {
-    flex: 1.2; 
-    display: flex;
-    flex-direction: column;
-    /* Alinha o Título ao topo e o Contato (eventualmente) ao fundo */
-    justify-content: space-between; 
-    position: relative;
-    padding-top: 20px; 
-    z-index: 1; 
-}
-
-/* ======================================================================
-   2. COLUNA 1: IMAGEM E ELEMENTOS
-   ====================================================================== */
-
-.decorativeElements {
-    position: absolute;
-    top: 0; 
-    left: 0; 
-    display: flex;
-    gap: 12px; /* Reduzido o gap */
-    z-index: 20;
-}
-
-.decorativeShape {
-    width: 25px; 
-    height: 25px; 
-    background-color: var(--color-text-primary); 
-    /* Usando transform para o efeito 'estrela', mas ajustando a rotação */
-    transform: rotate(30deg); 
-    border-radius: 4px; 
-}
-
-.imageWrapper {
-    position: relative;
-    width: 100%;
-    max-width: 450px; 
-    padding-top: 135%; 
-    margin-top: 20px; 
-    z-index: 10;
-    /* Reduzida a borda para 2px, dando um ar mais limpo */
-    border: 2px solid var(--color-text-primary);
-}
-
-/* Overlay Sólido (Retangular) - Criando profundidade */
-.imageWrapper::before {
-    content: '';
-    position: absolute;
-    /* Padrão de deslocamento refinado (20px) */
-    top: 20px; 
-    left: 20px;
-    width: 100%;
-    height: 100%;
-    /* Usando a cor de acento global para o overlay */
-    background-color: var(--color-background-accent);
-    z-index: -1;
-    border: 2px solid var(--color-text-primary);
-}
-
-.mainImage {
-    /* Garante que a imagem principal não tenha borda (pois o wrapper já tem) */
-    z-index: 1;
-}
-
-.imageTextBlock {
-    position: absolute;
-    /* Deslocamento mais agressivo para o canto */
-    bottom: -30px; 
-    left: -30px; 
-    background-color: var(--color-text-highlight); 
-    color: var(--color-text-light);
-    padding: 14px 20px;
-    z-index: 30; 
-    max-width: 280px; 
-    font-size: 0.8rem;
-    line-height: 1.4;
-    text-align: left;
-    composes: fontSans;
-}
-
-.imageText {
-    margin: 0;
-}
-
-
-/* ======================================================================
-   3. COLUNA 2: TÍTULO, ARTE TIPOGRÁFICA E CONTATO
-   ====================================================================== */
-
-.mainTitle {
-    font-size: 11vw; /* Aumentado para mais peso visual */
-    line-height: 0.8; /* Mais apertado para maior impacto visual */
-    margin: 0;
-    color: var(--color-text-highlight);
-    text-transform: uppercase;
-    composes: fontSerif;
-    position: relative;
-    z-index: 50; 
-    letter-spacing: -0.06em; /* Mais espaçamento negativo */
-    padding-right: 20px; 
-    /* Adicionando padding-bottom para criar espaço para o Contact Block */
-    padding-bottom: 50px; 
-}
-
-.mainTitle > span {
-    display: none; 
-}
-
-/* Camada de texto artístico repetido (Outline) */
-.artisticTextLayer {
-    position: absolute;
-    top: 50px; /* Ajuste para centralizar visualmente melhor com o título */
-    right: 0; 
-    z-index: 5; 
-    /* Reduzida a opacidade para um efeito mais sutil e de fundo */
-    opacity: 0.08; 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; 
-    pointer-events: none;
-    line-height: 0.6; /* Extremamente apertado */
-    transform: translateX(10%); 
-}
-
-.artisticText {
-    font-size: 15vw; 
-    margin: 0;
-    composes: fontSerif;
-    color: transparent; 
-    -webkit-text-stroke: 1px var(--color-text-primary); 
-    text-stroke: 1px var(--color-text-primary);
-    letter-spacing: 0.1em; /* Mais espaçamento para a arte tipográfica */
-}
-
-.contactBlock {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; 
-    gap: 8px; /* Reduzido o gap para mais minimalismo */
-    padding-top: 10px; /* Separando do padding-bottom do título */
-    composes: fontSans;
-    z-index: 50;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-.contactItem {
-    margin: 0;
-    color: var(--color-text-primary);
-    letter-spacing: 0.05em; 
-}
-
-
-/* ======================================================================
-   4. FAIXA INFERIOR (RODAPÉ VISUAL)
-   ====================================================================== */
-.heroFooterStrip {
-    background-color: var(--color-text-primary);
-    color: var(--color-background-light);
-    /* Utilizando a variável de padding global */
-    padding: 30px var(--container-padding); 
-    width: 100%;
-    margin-top: 0; 
-    position: relative;
-}
-
-.footerStripContent {
-    max-width: 1440px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; /* Alinhamento centralizado para texto e forma */
-    gap: 20px;
-}
-
-.footerStripText {
-    margin: 0;
-    font-size: 0.75rem; 
-    line-height: 1.6;
-    max-width: 450px; /* Ligeiramente mais largo */
-    text-align: left;
-    composes: fontSans;
-    opacity: 0.9; /* Um pouco mais de contraste */
-}
-
-.decorativeShapeBottomRight {
-    width: 25px;
-    height: 25px;
-    background-color: var(--color-text-light); 
-    transform: rotate(30deg); /* Consistente com os elementos de topo */
-    border-radius: 4px;
-    flex-shrink: 0; 
-}
-
-/* ======================================================================
-   RESPONSIVIDADE (REFINADA)
-   ====================================================================== */
-
-@media (max-width: 1024px) {
-    .heroContent {
-        flex-direction: column; 
-        padding: 50px var(--container-padding-mobile);
-        gap: 50px; 
-    }
-
-    .columnLeft {
-        padding-top: 0; 
-        order: 1;
-        align-items: center; 
-    }
-
-    .imageWrapper {
-        max-width: 90%; 
-        margin: 0 auto;
-    }
-
-    .imageTextBlock {
-        bottom: -25px;
-        left: 50%; 
-        transform: translateX(-50%);
-        max-width: 90%;
-        text-align: center;
-        font-size: 0.7rem; /* Reduzido para caber melhor */
-        line-height: 1.4;
-    }
-
-    .decorativeElements {
-        left: 50%;
-        transform: translateX(-50%);
-        top: -15px; /* Ajuste fino para mobile */
-    }
-
-    .columnRight {
-        align-items: flex-start;
-        padding-top: 20px; 
-        order: 2;
-    }
-    
-    .mainTitle {
-        font-size: 15vw; 
-        text-align: left;
-    }
-
-    .artisticTextLayer {
-        right: auto;
-        left: 0;
-        top: 80px; 
-        align-items: flex-start;
-        transform: translateX(0); 
-        opacity: 0.08;
-    }
-
-    .artisticText {
-        font-size: 20vw;
-        -webkit-text-stroke: 0.5px var(--color-text-primary);
-        text-stroke: 0.5px var(--color-text-primary);
-        letter-spacing: 0.05em;
-    }
-
-    .contactBlock {
-        align-items: flex-start; 
-        padding-top: 40px;
-    }
-
-    .heroFooterStrip {
-        padding: 20px var(--container-padding-mobile);
-    }
-    .footerStripContent {
-        flex-direction: column;
-        align-items: flex-start; /* Alinhamento esquerdo para consistência do mobile */
-    }
-    .footerStripText {
-        text-align: left;
-        margin-bottom: 10px;
-    }
+  }
+  .hero-note {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
