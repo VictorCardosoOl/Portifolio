@@ -23,27 +23,27 @@ const menuItems = [
   { 
     label: 'Sobre', 
     ariaLabel: 'Ir para Sobre Mim', 
-    link: '#about' 
+    link: '#sobre' 
   },
   { 
     label: 'Formação', 
     ariaLabel: 'Ir para Formação Acadêmica', 
-    link: '#academic' 
+    link: '#academico' 
   },
   { 
     label: 'Skills', 
     ariaLabel: 'Ir para Habilidades', 
-    link: '#skills' 
+    link: '#habilidades' 
   },
   { 
     label: 'Projetos', 
     ariaLabel: 'Ir para Projetos', 
-    link: '#projects' 
+    link: '#projetos' 
   },
   { 
     label: 'Contato', 
     ariaLabel: 'Ir para Contato', 
-    link: '#contact' 
+    link: '#contato' 
   },
 ];
 

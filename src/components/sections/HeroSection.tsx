@@ -33,12 +33,12 @@ const HeroSection: React.FC = () => {
         <div className={styles.heroText}>
             <h1>
                 {/* Classes de cores em camelCase */}
-                <span className={styles.textLightGrey}>Sou o</span>{' '}
+                <span className={styles.textLightGrey}>Prazer sou o</span>{' '}
                 <span className={styles.textDarkBold}>Victor</span>{' '}
                 <span className={styles.textLightGrey}>Cardoso,</span>
                 <br />
                 <span className={styles.textDarkBold}>Software Developer</span>{' '}
-                <span className={styles.textDarkBold}>&</span>{' '}
+                <span className={styles.textLightGrey}>&</span>{' '}
                 <span className={styles.textLightGrey}>estudante de</span>
                 <span className={styles.textLightGrey}> Engenharia da Computação,</span>{' '}
         
