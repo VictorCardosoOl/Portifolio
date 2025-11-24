@@ -1,4 +1,11 @@
-/* src/components/StaggeredMenu.css */
+/* --- CONFIGURAÇÕES GERAIS E VARIÁVEIS --- */
+:root {
+  --sm-width: clamp(260px, 38vw, 420px);
+  --sm-z-index-wrapper: 40;
+  --sm-z-index-header: 50;
+  --sm-z-index-panel: 45;
+  --sm-accent: #B19EEF; /* Cor padrão caso não seja passada via prop */
+}
 
 .staggered-menu-wrapper {
   position: relative;
@@ -76,17 +83,28 @@
 }
 
 .sm-toggle {
-  position: relative;
+  position: fixed; /* Fixado na tela */
+  top: 40px;       /* Distância do topo */
+  
+  /* Posição Padrão (Direita) - Sobrescrito se data-position="left" */
+  right: 40px; 
+  left: auto;
+
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  justify-content: flex-end;
+  gap: 12px; /* Espaço entre texto e ícone */
+  
   background: transparent;
   border: none;
   cursor: pointer;
   color: #e9e9ef;
-  font-weight: 500;
-  line-height: 1;
+  
+  /* Garante visibilidade sobre fundos claros */
+  mix-blend-mode: difference; 
+  
   overflow: visible;
+  z-index: calc(var(--sm-z-index-header) + 10);
 }
 
 .sm-toggle:focus-visible {
@@ -99,14 +117,19 @@
   margin-top: 6px;
 }
 
+/* --- TEXTO DO BOTÃO (Tamanho Aumentado) --- */
 .sm-toggle-textWrap {
   position: relative;
   display: inline-block;
-  height: 1em;
+  
+  /* Altura ajustada para o novo tamanho da fonte */
+  height: 1.3rem; 
   overflow: hidden;
   white-space: nowrap;
+  
   width: var(--sm-toggle-width, auto);
   min-width: var(--sm-toggle-width, auto);
+  text-align: right;
 }
 
 .sm-toggle-textInner {
@@ -117,21 +140,24 @@
 
 .sm-toggle-line {
   display: block;
-  height: 1em;
-  line-height: 1;
+  /* CORREÇÃO DO TAMANHO DA FONTE */
+  font-size: 1.25rem; /* Aumentado de 1rem para 1.25rem (~20px) */
+  font-weight: 500;   /* Texto mais grosso */
+  line-height: 1.3rem; /* Igual à altura do wrapper */
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .sm-icon {
   position: relative;
-  width: 14px;
-  height: 14px;
-  flex: 0 0 14px;
+  width: 16px; /* Levemente maior */
+  height: 16px;
+  flex: 0 0 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   will-change: transform;
 }
-
 .sm-panel-itemWrap {
   position: relative;
   overflow: hidden;
@@ -417,3 +443,4 @@
    /* ... outros estilos ... */
    pointer-events: auto;
 }
+
