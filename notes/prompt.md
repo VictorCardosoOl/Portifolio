@@ -148,3 +148,7 @@ Recomendações:
 Liste melhorias práticas (técnicas e organizacionais).
 Sugira refatorações, novas ferramentas ou padrões de projeto adequados.
 Aponte oportunidades para aumentar escalabilidade, legibilidade e manutenibilidade.
+
+
+C:\Users\victo\OneDrive\Documentos\teste
+referencias do hero 
