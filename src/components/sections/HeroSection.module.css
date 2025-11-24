@@ -2,14 +2,16 @@
 
 /* ESTILOS ESPECÍFICOS DO COMPONENTE */
 
-/* DOCUMENTAÇÃO: A classe principal .hero usa grid para o layout. */
 .hero { 
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  /* Reduzido de 1fr 2fr para 1fr 1.5fr para dar menos espaço ao texto em relação à imagem */
+  grid-template-columns: 1fr 1.5fr; 
   min-height: 100vh;
-  padding: 2rem 5vw;
+  /* REDUÇÃO: Diminuir o padding geral para deixar o Hero mais compacto */
+  padding: 2rem 4vw; 
   align-items: center;
-  gap: 3rem;
+  /* REDUÇÃO: Diminuir o espaço entre a imagem e o texto */
+  gap: 2rem; 
   position: relative;
 }
 
@@ -26,7 +28,8 @@
 
 /* CLASSE CORRIGIDA: .heroImage */
 .heroImage {
-  max-width: 350px; 
+  /* REDUÇÃO: Diminuir o tamanho máximo da área da imagem */
+  max-width: 300px; 
   aspect-ratio: 1 / 1; 
   position: relative; 
   opacity: 0;
@@ -38,7 +41,7 @@
   height: 100%;
   object-fit: cover; 
 
-  /* CORREÇÃO DE PATH: Resolvendo o erro 'Module not found' */
+  /* CORREÇÃO DE PATH (Mantido da última correção) */
   -webkit-mask-image: url('/mascara-rabisco.svg');
   mask-image: url('/mascara-rabisco.svg');
   
@@ -55,15 +58,20 @@
 
 /* CLASSE CORRIGIDA: .heroText */
 .heroText h1 {
-  font-size: clamp(2rem, 5vw, 4rem); 
+  /* REDUÇÃO: Diminuir o tamanho da fonte (font-size)
+     - Anterior: clamp(2rem, 5vw, 4rem)
+     - Novo: clamp(1.8rem, 4.5vw, 3.5rem) para uma aparência mais compacta.
+  */
+  font-size: clamp(1.8rem, 4.5vw, 3.5rem); 
   font-weight: 300;
-  line-height: 1.3;
+  /* REDUÇÃO: Ajustar o line-height para deixar as linhas mais próximas */
+  line-height: 1.2; 
   opacity: 0;
   transform: translateY(30px);
   animation: fadeUp 1.5s ease forwards 1.5s; 
 }
 
-/* CLASSES DE COR CORRIGIDAS (AGORA USANDO AS NOVAS VARIÁVEIS GLOBAIS) */
+/* CLASSES DE COR CORRIGIDAS (Mantidas) */
 .textLightGrey { color: var(--color-text-secondary); }
 .textDarkBold   { color: var(--color-text-highlight); font-weight: 700; }
 .textGreenBold  { color: var(--color-primary); font-weight: 700; }
@@ -81,7 +89,7 @@
   }
 }
 
-/* Responsividade (Seletores ajustados) */
+/* Responsividade (Ajuste do heroImage para corresponder ao novo tamanho) */
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
@@ -90,7 +98,8 @@
     padding-top: 6rem;
   }
   .heroImage {
-    max-width: 250px;
+    /* AJUSTE: Manteve o tamanho pequeno para mobile */
+    max-width: 250px; 
     margin: 0 auto;
   }
   .heroNote {
